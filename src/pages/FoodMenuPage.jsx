@@ -4,7 +4,9 @@ import { Utensils, Coffee, Calendar, Phone, Sparkles, Star, HeartHandshake, Zoom
 import PageTransition from '../components/PageTransition';
 
 export default function FoodMenuPage({ onOpenBooking }) {
-  const [selectedDay, setSelectedDay] = useState('ALL');
+  const dayNames = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+  const todayDayName = dayNames[new Date().getDay()];
+  const [selectedDay, setSelectedDay] = useState(todayDayName);
   const [activeImageModal, setActiveImageModal] = useState(null);
   const [customMenu, setCustomMenu] = useState(null);
 
@@ -165,20 +167,25 @@ export default function FoodMenuPage({ onOpenBooking }) {
 
           {/* DAY-BY-DAY FILTER TABS */}
           <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-10 text-xs font-mono">
-            {['ALL', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'].map((day) => (
-              <button
-                key={day}
-                onClick={() => setSelectedDay(day)}
-                className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap font-bold border ${
-                  selectedDay === day
-                    ? 'bg-[#D4A64A] text-[#0B1220] border-[#D4A64A] shadow-lg shadow-[#D4A64A]/30 scale-105'
-                    : 'glass-card border-white/10 text-[#FAF7F0]/80 hover:text-[#D4A64A]'
-                }`}
-                data-cursor="expand"
-              >
-                {day === 'ALL' ? '📅 Full Week Schedule' : day}
-              </button>
-            ))}
+            {['ALL', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'].map((day) => {
+              const isToday = day === todayDayName;
+              return (
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day)}
+                  className={`px-4 py-2 rounded-xl transition-all whitespace-nowrap font-bold border flex items-center gap-1.5 ${
+                    selectedDay === day
+                      ? 'bg-[#D4A64A] text-[#0B1220] border-[#D4A64A] shadow-lg shadow-[#D4A64A]/30 scale-105'
+                      : 'glass-card border-white/10 text-[#FAF7F0]/80 hover:text-[#D4A64A]'
+                  }`}
+                  data-cursor="expand"
+                >
+                  {isToday && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
+                  <span>{day === 'ALL' ? '📅 Full Week' : day}</span>
+                  {isToday && <span className="text-[10px] font-bold opacity-80">(Today)</span>}
+                </button>
+              );
+            })}
           </div>
 
           {/* CARD-LIKE DAY-BY-DAY MENU CARDS GRID */}
