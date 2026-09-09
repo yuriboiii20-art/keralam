@@ -14,12 +14,16 @@ import AmenitiesGrid from '../components/AmenitiesGrid';
 import DiningMarquee from '../components/DiningMarquee';
 import TestimonialsOrbit from '../components/TestimonialsOrbit';
 import FloatingQuickDock from '../components/FloatingQuickDock';
+import HomePgFilterModal from '../components/HomePgFilterModal';
 import { locations } from '../data/locationsData';
 
 export default function Home({ onOpenBooking }) {
   const [activeHotspot, setActiveHotspot] = useState(null);
   const [activeFaq, setActiveFaq] = useState(null);
   const [roomCategoryTab, setRoomCategoryTab] = useState('all');
+
+  // Filter Modal State
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   // Low-Scroll Master Deck Navigation State
   const [activeMasterDeck, setActiveMasterDeck] = useState('living'); // 'living' | 'dining' | 'campus' | 'reviews'
@@ -70,11 +74,10 @@ export default function Home({ onOpenBooking }) {
   const featuredRooms = [
     {
       id: 'daily-special',
-      title: 'Daily Stay ⭐ Special',
+      title: 'Daily Stay Special',
       type: 'daily',
       price: '₹499',
       period: 'day',
-      image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
       badge: 'Breakfast Free',
       desc: 'Clean furnished room + free hot Kerala breakfast (Puttu/Dosa/Idli) every morning.',
       highlights: ['Hot Kerala Breakfast', 'High-Speed Wi-Fi', '2-Min to HCL Gate', 'Zero Security Deposit']
@@ -85,7 +88,6 @@ export default function Home({ onOpenBooking }) {
       type: 'sharing',
       price: '₹7,499',
       period: 'month',
-      image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80',
       badge: 'Most Popular',
       desc: 'Spacious twin sharing room with personal study desk, wardrobe locker & attached bath.',
       highlights: ['3x Daily Kerala Food', '100% Gen Power', 'Daily Housekeeping', '1-Month Deposit Only']
@@ -96,7 +98,6 @@ export default function Home({ onOpenBooking }) {
       type: 'private',
       price: '₹11,499',
       period: 'month',
-      image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80',
       badge: '100% Privacy',
       desc: 'Independent private single room for IT professionals seeking uninterrupted focus.',
       highlights: ['3x Homestyle Meals', 'Private Study Nook', 'Balcony Greenery View', 'High-Speed Wi-Fi']
@@ -184,7 +185,7 @@ export default function Home({ onOpenBooking }) {
     {
       id: 'reviews',
       title: 'Reviews & FAQ',
-      subtitle: 'Google 4.9★, Instant Answers & Cities',
+      subtitle: 'Verified Ratings, Instant Answers & Cities',
       icon: Star,
       badge: '140+ Reviews',
     },
@@ -193,7 +194,7 @@ export default function Home({ onOpenBooking }) {
   // Helper renderers for modular sections
   const renderCuratedRooms = () => (
     <div className="space-y-8">
-      {/* Room Category Tabs */}
+      {/* Room Category Tabs + Small Filter Icon Button */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
           <h3 className="text-xl sm:text-2xl font-bold font-sora text-[#FAF7F0]">
@@ -205,9 +206,19 @@ export default function Home({ onOpenBooking }) {
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+          {/* Small Filter Button */}
+          <button
+            onClick={() => setIsFilterModalOpen(true)}
+            className="px-3 py-1.5 rounded-xl bg-[#D4A64A]/15 hover:bg-[#D4A64A]/25 border border-[#D4A64A]/40 text-[#D4A64A] text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 shadow-sm"
+            title="Filter by City, PG Type and Sharing"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span>Filter</span>
+          </button>
+
           {[
             { id: 'all', label: 'All Plans' },
-            { id: 'daily', label: '⭐ Daily Stay (₹499/day)' },
+            { id: 'daily', label: 'Daily Stay (₹499/day)' },
             { id: 'sharing', label: '2 BHK Sharing' },
             { id: 'private', label: 'Private Suites' },
           ].map((tab) => (
@@ -492,7 +503,7 @@ export default function Home({ onOpenBooking }) {
               {loc.city}
             </span>
             <span className="text-[9px] font-mono text-[#D4A64A] mt-0.5 block">
-              {loc.status === 'live' ? '🟢 Live' : '⏳ Soon'}
+              {loc.status === 'live' ? 'Live' : 'Coming Soon'}
             </span>
           </Link>
         ))}
@@ -532,24 +543,35 @@ export default function Home({ onOpenBooking }) {
               Fully furnished 1BHK, 2BHK, Single Rooms & Daily Stays in Jigani, Bengaluru — with authentic homestyle Kerala meals, 1Gbps fiber Wi-Fi & 100% power backup included.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 mb-8">
+            {/* CTA Buttons with Small Filter Icon Button */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8">
               <Link
                 to="/rooms"
-                className="px-7 py-4 rounded-2xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] font-extrabold text-sm shadow-xl shadow-[#D4A64A]/30 hover:shadow-[#D4A64A]/50 hover:scale-105 transition-all flex items-center gap-2 btn-shimmer"
+                className="px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] font-extrabold text-sm shadow-xl shadow-[#D4A64A]/30 hover:shadow-[#D4A64A]/50 hover:scale-105 transition-all flex items-center gap-2 btn-shimmer"
                 data-cursor="expand"
               >
                 <span>View All Rooms</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
+              {/* SMALL FILTER ICON BUTTON */}
+              <button
+                onClick={() => setIsFilterModalOpen(true)}
+                className="px-4 sm:px-5 py-3.5 sm:py-4 rounded-2xl glass-card border border-[#D4A64A]/50 text-[#D4A64A] font-bold text-sm hover:bg-[#D4A64A]/15 hover:scale-105 transition-all flex items-center gap-2 shadow-lg"
+                data-cursor="expand"
+                title="Filter by City, PG Type, and Sharing"
+              >
+                <SlidersHorizontal className="w-4 h-4" />
+                <span>Filter</span>
+              </button>
+
               <button
                 onClick={() => onOpenBooking('Daily Stay Special (₹499/day)')}
-                className="px-7 py-4 rounded-2xl glass-card border border-[#D4A64A]/40 text-[#D4A64A] font-bold text-sm hover:bg-[#D4A64A]/15 hover:scale-105 transition-all flex items-center gap-2"
+                className="px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl glass-card border border-white/20 text-[#FAF7F0] font-bold text-sm hover:bg-white/10 hover:scale-105 transition-all flex items-center gap-2"
                 data-cursor="expand"
               >
-                <Calendar className="w-4 h-4" />
-                <span>Book Stay — ₹499/day</span>
+                <Calendar className="w-4 h-4 text-[#D4A64A]" />
+                <span>₹499/day Stay</span>
               </button>
             </div>
 
@@ -557,7 +579,7 @@ export default function Home({ onOpenBooking }) {
             <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-[#FAF7F0]/10 text-xs text-[#FAF7F0]/80">
               <div className="flex items-center gap-1.5">
                 <Star className="w-4 h-4 fill-[#D4A64A] text-[#D4A64A]" />
-                <span className="font-bold text-[#FAF7F0]">4.9★</span>
+                <span className="font-bold text-[#FAF7F0]">4.9</span>
                 <span>(140+ Google Reviews)</span>
               </div>
               <div className="flex items-center gap-1.5 text-emerald-400 font-semibold">
@@ -586,7 +608,7 @@ export default function Home({ onOpenBooking }) {
             {[
               { number: '500+', label: 'Happy Residents' },
               { number: '7+', label: 'Years of Trust' },
-              { number: '4.9★', label: 'Google Rating' },
+              { number: '4.9', label: 'Google Rating' },
               { number: '100%', label: 'Generator Backup' },
             ].map((stat, idx) => (
               <motion.div
@@ -696,10 +718,10 @@ export default function Home({ onOpenBooking }) {
                   {/* Sub-Tabs */}
                   <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto overflow-x-auto">
                     {[
-                      { id: 'rooms', label: '🛏️ Rooms Preview' },
-                      { id: 'calculator', label: '💰 Rate Calculator' },
-                      { id: 'savings', label: '⚖️ Savings vs Flat' },
-                      { id: 'hotspots', label: '🔍 360° Hotspots' },
+                      { id: 'rooms', label: 'Rooms Preview' },
+                      { id: 'calculator', label: 'Rate Calculator' },
+                      { id: 'savings', label: 'Savings vs Flat' },
+                      { id: 'hotspots', label: '360° Hotspots' },
                     ].map((st) => (
                       <button
                         key={st.id}
@@ -746,8 +768,8 @@ export default function Home({ onOpenBooking }) {
                   {/* Sub-Tabs */}
                   <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto">
                     {[
-                      { id: 'live-kitchen', label: '🍲 Today’s Live Kitchen' },
-                      { id: 'dining-marquee', label: '🥘 Kerala Dining Showcase' },
+                      { id: 'live-kitchen', label: 'Today Live Kitchen' },
+                      { id: 'dining-marquee', label: 'Kerala Dining Showcase' },
                     ].map((st) => (
                       <button
                         key={st.id}
@@ -787,9 +809,9 @@ export default function Home({ onOpenBooking }) {
                   {/* Sub-Tabs */}
                   <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto overflow-x-auto">
                     {[
-                      { id: 'commute', label: '📍 Commute Radius (HCL Gate)' },
-                      { id: 'amenities', label: '✨ Zero-Gravity Amenities' },
-                      { id: 'comparison', label: '📊 PG vs Flat Matrix' },
+                      { id: 'commute', label: 'Commute Radius (HCL Gate)' },
+                      { id: 'amenities', label: 'Zero-Gravity Amenities' },
+                      { id: 'comparison', label: 'PG vs Flat Matrix' },
                     ].map((st) => (
                       <button
                         key={st.id}
@@ -826,9 +848,9 @@ export default function Home({ onOpenBooking }) {
                   {/* Sub-Tabs */}
                   <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto overflow-x-auto">
                     {[
-                      { id: 'testimonials', label: '⭐ Google 4.9★ Reviews' },
-                      { id: 'faq', label: '❓ Instant FAQ Finder' },
-                      { id: 'expansion', label: '🗺️ Pan-India Cities' },
+                      { id: 'testimonials', label: 'Resident Reviews' },
+                      { id: 'faq', label: 'FAQ Finder' },
+                      { id: 'expansion', label: 'Pan-India Cities' },
                     ].map((st) => (
                       <button
                         key={st.id}
@@ -911,10 +933,18 @@ export default function Home({ onOpenBooking }) {
           </div>
         </section>
 
-        {/* FLOATING QUICK DOCK HUD (ZERO SCROLL NAVIGATION) */}
+        {/* FLOATING QUICK DOCK HUD */}
         <FloatingQuickDock
           activeMasterDeck={activeMasterDeck}
           onSelectMasterDeck={(deck) => setActiveMasterDeck(deck)}
+          onOpenBooking={onOpenBooking}
+          onOpenFilter={() => setIsFilterModalOpen(true)}
+        />
+
+        {/* CLEAN FILTER MODAL WITH DROPDOWNS (TRIGGERED BY SMALL FILTER ICON) */}
+        <HomePgFilterModal
+          isOpen={isFilterModalOpen}
+          onClose={() => setIsFilterModalOpen(false)}
           onOpenBooking={onOpenBooking}
         />
 
