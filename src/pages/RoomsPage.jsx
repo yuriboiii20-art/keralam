@@ -167,8 +167,12 @@ export default function RoomsPage({ onOpenBooking }) {
                         {/* Image Preview */}
                         <div className="relative h-56 sm:h-64 rounded-2xl overflow-hidden mb-6 border border-white/10">
                           <img
-                            src={plan.image}
+                            src={plan.image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'}
                             alt={plan.title}
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80';
+                            }}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             loading="lazy"
                           />
