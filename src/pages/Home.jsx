@@ -78,6 +78,7 @@ export default function Home({ onOpenBooking }) {
       type: 'daily',
       price: '₹499',
       period: 'day',
+      image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
       badge: 'Breakfast Free',
       desc: 'Clean furnished room + free hot Kerala breakfast (Puttu/Dosa/Idli) every morning.',
       highlights: ['Hot Kerala Breakfast', 'High-Speed Wi-Fi', '2-Min to HCL Gate', 'Zero Security Deposit']
@@ -88,6 +89,7 @@ export default function Home({ onOpenBooking }) {
       type: 'sharing',
       price: '₹7,499',
       period: 'month',
+      image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80',
       badge: 'Most Popular',
       desc: 'Spacious twin sharing room with personal study desk, wardrobe locker & attached bath.',
       highlights: ['3x Daily Kerala Food', '100% Gen Power', 'Daily Housekeeping', '1-Month Deposit Only']
@@ -98,6 +100,7 @@ export default function Home({ onOpenBooking }) {
       type: 'private',
       price: '₹11,499',
       period: 'month',
+      image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80',
       badge: '100% Privacy',
       desc: 'Independent private single room for IT professionals seeking uninterrupted focus.',
       highlights: ['3x Homestyle Meals', 'Private Study Nook', 'Balcony Greenery View', 'High-Speed Wi-Fi']
@@ -254,8 +257,12 @@ export default function Home({ onOpenBooking }) {
               <div>
                 <div className="relative h-44 rounded-2xl overflow-hidden mb-4 border border-white/10">
                   <img
-                    src={room.image}
+                    src={room.image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'}
                     alt={room.title}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80';
+                    }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />

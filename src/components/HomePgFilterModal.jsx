@@ -328,8 +328,12 @@ export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
                         {/* Compact Image */}
                         <div className="relative h-36 rounded-xl overflow-hidden mb-3 border border-white/10">
                           <img
-                            src={room.image}
+                            src={room.image || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=600&q=80'}
                             alt={room.name}
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80';
+                            }}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                           />
