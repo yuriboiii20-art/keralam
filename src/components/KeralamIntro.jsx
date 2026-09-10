@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import { useEffect, useRef, useState } from 'react';
 import { Player } from '@remotion/player';
 import { LOGO_DURATION, LogoAnimation } from './KeralamLogo';
@@ -7,6 +8,7 @@ export default function KeralamIntro() {
   const [visible, setVisible] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const player = useRef(null);
   const overlay = useRef(null);
+  useScrollLock(visible);
 
   useEffect(() => {
     if (!visible) return;

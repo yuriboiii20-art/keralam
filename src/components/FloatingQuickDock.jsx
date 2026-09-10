@@ -27,12 +27,12 @@ export default function FloatingQuickDock({
     onSelectMasterDeck(itemId);
     const element = document.getElementById('experience-hub');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   const navItems = [

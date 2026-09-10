@@ -1,6 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 import CustomCursor from './components/CustomCursor';
@@ -9,7 +9,8 @@ import ScrollProgress from './components/ScrollProgress';
 import IntroLoader from './components/IntroLoader';
 import EnquiryPopup from './components/EnquiryPopup';
 import AIChatbot from './components/AIChatbot';
-import AdminCMSModal from './components/AdminCMSModal';
+import RouteScroll from './components/RouteScroll';
+const AdminCMSModal = import.meta.env.DEV ? lazy(() => import('./components/AdminCMSModal')) : null;
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
@@ -71,7 +72,7 @@ function AnimatedRoutes({ onOpenBooking, onSelectRoom }) {
 
   return (
     <Suspense fallback={<PageFallback />}>
-      <AnimatePresence mode="wait">
+      <RouteScroll />
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home onOpenBooking={onOpenBooking} />} />
           <Route
@@ -97,7 +98,7 @@ function AnimatedRoutes({ onOpenBooking, onSelectRoom }) {
           <Route path="/move-in" element={<MoveInPage onOpenBooking={onOpenBooking} />} />
           <Route path="/careers" element={<CareersPage />} />
         </Routes>
-      </AnimatePresence>
+
     </Suspense>
   );
 }
@@ -122,9 +123,10 @@ export default function App() {
   };
 
   return (
+    <MotionConfig reducedMotion="user">
     <BrowserRouter>
-      <div className="relative min-h-screen bg-[#0B1220] text-[#FAF7F0] selection:bg-[#D4A64A]/30 selection:text-[#FAF7F0] overflow-x-hidden">
-        
+      <div className="relative min-h-screen bg-[#0B1220] text-[#FAF7F0] selection:bg-[#D4A64A]/30 selection:text-[#FAF7F0] overflow-x-clip">
+
         {/* Intro Loading Screen */}
         <IntroLoader />
 
@@ -167,10 +169,10 @@ export default function App() {
         />
 
         {/* Admin Live CMS Drawer Modal */}
-        <AdminCMSModal
+        {import.meta.env.DEV && <Suspense fallback={null}><AdminCMSModal
           isOpen={isAdminCMSOpen}
           onClose={() => setIsAdminCMSOpen(false)}
-        />
+        /></Suspense>}
 
         {/* Floating AI Chatbot Concierge */}
         <AIChatbot onOpenBooking={() => handleOpenBooking()} />
@@ -183,5 +185,6 @@ export default function App() {
 
       </div>
     </BrowserRouter>
+    </MotionConfig>
   );
 }

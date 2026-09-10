@@ -26,7 +26,6 @@ export default function CityDetailsPage({ onOpenBooking }) {
     document.title = isLive
       ? `Aafa Coliving ${location.city} | Premium PG & Rooms in ${location.city}`
       : `Aafa Coliving ${location.city} (${location.launchTimeline}) | Premium PG & Co-Living`;
-    window.scrollTo(0, 0);
   }, [location, isLive]);
 
   const handlePrioritySubmit = (e) => {
@@ -70,7 +69,7 @@ export default function CityDetailsPage({ onOpenBooking }) {
       `Please lock my early-bird discount slot and send me floor plans when live!`
     );
     setTimeout(() => {
-      window.open(`https://wa.me/918747049377?text=${msg}`, '_blank');
+      window.open(`https://wa.me/918747049377?text=${msg}`, '_blank', 'noopener,noreferrer');
     }, 600);
   };
 

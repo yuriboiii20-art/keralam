@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Calendar, Phone, Menu, X, ArrowRight, ChevronDown, MapPin, Sparkles, Home as HomeIcon, Utensils, ShieldCheck, Star, BookOpen, Building2, UserCheck, Search } from 'lucide-react';
@@ -13,12 +14,14 @@ export default function Navbar({ onOpenBooking }) {
   const [activeDropdown, setActiveDropdown] = useState(null); // 'living' | 'trust' | 'phone'
   const [mobileAccordion, setMobileAccordion] = useState(null); // 'locations' | 'living' | 'trust' | 'phone'
   const location = useLocation();
+  useScrollLock(mobileMenuOpen);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -26,7 +29,6 @@ export default function Navbar({ onOpenBooking }) {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
     setMobileAccordion(null);
-    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const phoneNumbers = [

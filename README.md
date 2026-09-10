@@ -22,7 +22,7 @@
 - **Spring Reactive Custom Cursor (`CustomCursor.jsx`)**: Magnetic gold follower ring with smooth physics spring physics.
 
 ### 🤖 2. Gemini AI Concierge Chatbot (`AIChatbot.jsx`)
-- **Google Gemini API Integration**: Configured via `VITE_GEMINI_API_KEY` in `.env`.
+- **Google Gemini API Integration**: Disabled in the browser; the concierge uses local answers. Any future AI integration must keep credentials on a server with rate limiting.
 - **Master Knowledge Training**: Trained on all campus specifications, room pricing, 5-step move-in onboarding, weekly Kerala menu, women's safety, and escalation rules.
 - **Smart Local Fallback**: Guaranteed 100% offline response generator if API quotas are exceeded.
 
@@ -43,7 +43,7 @@
 
 ### 🔒 6. Client Admin Live CMS Drawer (`AdminCMSModal.jsx`)
 - **No-Code Live Editor**: Accessible via **"Admin CMS Edit 🔒"** in the Footer.
-- **Instant Live Updates**: Allows property managers to edit room rates and weekly food schedule live. Saves to `localStorage` and triggers instant live re-renders across the site.
+- **Instant Live Updates**: Allows property managers to edit room rates and weekly food schedule live. Development-only preview editor; excluded from production. A shared production CMS requires server-side authentication and authorization.
 
 ### ♿ 7. Accessibility & SEO Compliance
 - **Keyboard Navigation Focus Rings**: Visible `:focus-visible` gold rings (`outline: 2px solid #D4A64A`).
@@ -134,10 +134,10 @@ npm install
 ```
 
 ### 3. Environment Setup
-Create a `.env` file in the root directory:
+No environment file is required for the local concierge. Never put secret credentials in `VITE_*` variables:
 
 ```env
-VITE_GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+# No browser API credentials are needed.
 ```
 
 ### 4. Run Development Server
@@ -185,3 +185,13 @@ The output build directory is `dist/`.
 ---
 
 © 2026 Aafa Coliving Group. All Rights Reserved.
+
+## Scrolling and deployment security
+
+Scrolling uses native browser behavior, reduced-motion preferences, frame-batched progress updates, and shared overlay scroll locks. New routes start at the top; browser Back/Forward restores positions within the current session. Route wrappers avoid transforms so fixed lightboxes remain attached to the viewport.
+
+Booking details are held in memory rather than saved to local storage. External windows use opener isolation. The browser AI key integration is disabled; local concierge answers remain available. If a key was previously deployed, revoke it in the provider console. Existing browser booking history from earlier releases is not automatically deleted.
+
+Vercel uses `vercel.json`; Netlify uses `public/_headers` and `public/_redirects`. Other hosts must configure equivalent response headers and SPA routing. Verify headers on the deployed domain. The CSP permits the existing Google fonts/maps and Unsplash images; review it when adding integrations. Inline script hashes must be regenerated if the structured data in `index.html` changes.
+
+Browser regression checks: with the dev server running, set `PUPPETEER_MODULE` to an installed puppeteer-core module entry file and `CHROME_PATH` to a Chrome executable, then run `node scripts/check-scrolling.mjs`. `TEST_URL` optionally overrides the localhost URL. The checks block external requests for deterministic scroll/layout assertions; verify third-party assets separately on deployment.

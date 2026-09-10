@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-
+import { useEffect, useRef } from 'react';
 export default function ScrollProgress() {
-  const [scrollPercent, setScrollPercent] = useState(0);
-
+  const bar = useRef(null);
   useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const currentProgress = (window.scrollY / totalHeight) * 100;
-        setScrollPercent(currentProgress);
-      }
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = height > 0 ? Math.max(0, Math.min(1, window.scrollY / height)) : 0;
+      if (bar.current) bar.current.style.transform = `scaleX(${progress})`;
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const observer = new ResizeObserver(schedule);
+    observer.observe(document.body);
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
   }, []);
-
-  return (
-    <div className="fixed top-0 left-0 right-0 h-1 z-[100] pointer-events-none">
-      <motion.div
-        style={{ width: `${scrollPercent}%` }}
-        className="h-full bg-gradient-to-r from-[#D4A64A] via-amber-400 to-yellow-500 shadow-[0_0_12px_#D4A64A]"
-      />
-    </div>
-  );
+  return <div aria-hidden="true" className="fixed top-0 left-0 right-0 h-1 z-[100] pointer-events-none">
+    <div ref={bar} style={{ transform: 'scaleX(0)', transformOrigin: 'left' }} className="h-full bg-gradient-to-r from-[#D4A64A] via-amber-400 to-yellow-500" />
+  </div>;
 }

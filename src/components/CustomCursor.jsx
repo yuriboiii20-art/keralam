@@ -17,15 +17,16 @@ export default function CustomCursor() {
 
   useEffect(() => {
     // Only enable custom cursor if device has mouse/fine pointer
-    const mediaQuery = window.matchMedia('(pointer: fine)');
+    const mediaQuery = window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)');
     setIsFinePointer(mediaQuery.matches);
 
     const handleMediaChange = (e) => setIsFinePointer(e.matches);
     mediaQuery.addEventListener('change', handleMediaChange);
 
-    if (!mediaQuery.matches) return;
+
 
     const handleMouseMove = (e) => {
+      if (!mediaQuery.matches) return;
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
 

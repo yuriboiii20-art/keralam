@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Utensils, Coffee, Calendar, Phone, Sparkles, Star, HeartHandshake, ZoomIn, X, CheckCircle2, Clock, Flame } from 'lucide-react';
@@ -8,6 +9,7 @@ export default function FoodMenuPage({ onOpenBooking }) {
   const todayDayName = dayNames[new Date().getDay()];
   const [selectedDay, setSelectedDay] = useState(todayDayName);
   const [activeImageModal, setActiveImageModal] = useState(null);
+  useScrollLock(!!activeImageModal);
   const [customMenu, setCustomMenu] = useState(null);
 
   // Load custom CMS menu if edited by client

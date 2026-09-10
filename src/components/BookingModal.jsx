@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -5,6 +6,7 @@ import { X, Calendar, User, Phone, Mail, Home, CheckCircle2, Sparkles, Send, Mes
 import confetti from 'canvas-confetti';
 
 export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
+  useScrollLock(isOpen);
   const [submitted, setSubmitted] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
   const [formData, setFormData] = useState(null);
@@ -56,16 +58,7 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
     setFormData(data);
     setSubmitted(true);
 
-    // Save to local storage for resident history
-    try {
-      const existing = JSON.parse(localStorage.getItem('aafa_resident_bookings') || '[]');
-      existing.unshift({
-        refCode,
-        ...data,
-        timestamp: new Date().toISOString(),
-      });
-      localStorage.setItem('aafa_resident_bookings', JSON.stringify(existing));
-    } catch (e) {}
+    // Guest details stay in memory until explicitly shared through WhatsApp.
 
     // Trigger Phone & Push Notification
     triggerPhoneNotification(data, refCode);
@@ -83,7 +76,7 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
     // Auto-open WhatsApp dispatch to user's device after brief smooth transition
     const whatsappUrl = `https://wa.me/918747049377?text=${getWhatsAppMessage(data, refCode)}`;
     setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }, 600);
   };
 
@@ -128,6 +121,8 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
 
   const handleClose = () => {
     setSubmitted(false);
+    setFormData(null);
+    setBookingRef('');
     reset();
     onClose();
   };

@@ -15,25 +15,9 @@ export default function AIChatbot({ onOpenBooking }) {
   const chatEndRef = useRef(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
-
-  // Master System Prompt & Knowledge Base for Aafa Coliving
-  const systemKnowledge = `
-You are the AI Assistant & Concierge for "Aafa Coliving", a premium zero-gravity PG & coliving space in Jigani, Bengaluru.
-Answer politely, concisely, and warmly — like a helpful front-desk manager, not a generic chatbot. Use short paragraphs or bullet points for room/pricing info.
-
-CORE FACTS:
-- Address: In front of Meghana Gents & Ladies PG, Sannidhi Layout, 2, Bande Nalla Sandra Rd, near HCL Gate, Jigani, Bengaluru, Karnataka 560105.
-- Distance: 2 minutes walk / 300 meters from HCL Gate in Jigani.
-- Hotlines: 8747049377, 9686193084, 9745688880.
-- Daily Stay: ₹499/day including free Kerala breakfast (Puttu/Dosa/Uppumavu).
-- 2 BHK Sharing: ₹7,499/month (3x Kerala Meals Included).
-- Single Room: ₹11,499/month (3x Kerala Meals Included).
-- 1 BHK Suite: Monthly rate with full privacy & kitchenette.
-- Deposit: 1 month refundable deposit only. Zero hidden charges.
-- Amenities: 3x Kerala food, 1Gbps dual fiber Wi-Fi, 100% generator power backup, biometric facial security, daily housekeeping, RO water, PS5 lounge.
-`;
+    const container = chatEndRef.current?.parentElement;
+    if (isOpen && container) container.scrollTo({ top: container.scrollHeight, behavior: 'auto' });
+  }, [messages, isLoading, isOpen]);
 
   // Local Smart Response Generator
   const getSmartResponse = (query) => {
@@ -72,45 +56,13 @@ CORE FACTS:
 
   const handleSend = async (customQuery = null) => {
     const userMsg = customQuery || input.trim();
-    if (!userMsg) return;
+    if (!userMsg || isLoading) return;
 
     setMessages((prev) => [...prev, { sender: 'user', text: userMsg }]);
     if (!customQuery) setInput('');
     setIsLoading(true);
 
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-    try {
-      if (apiKey && apiKey !== 'YOUR_GEMINI_API_KEY' && apiKey.startsWith('AQ.')) {
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [
-                {
-                  role: 'user',
-                  parts: [{ text: `${systemKnowledge}\n\nUser Question: ${userMsg}\nAnswer warmly as Aafa Coliving Front-Desk Concierge:` }],
-                },
-              ],
-            }),
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (replyText) {
-            setMessages((prev) => [...prev, { sender: 'bot', text: replyText }]);
-            setIsLoading(false);
-            return;
-          }
-        }
-      }
-    } catch (e) {
-      // Fallback to internal matcher
-    }
+    // Use local answers until a server-side, rate-limited AI endpoint exists.
 
     setTimeout(() => {
       const fallbackReply = getSmartResponse(userMsg);
@@ -144,7 +96,7 @@ CORE FACTS:
             initial={{ opacity: 0, scale: 0.88, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.88, y: 20 }}
-            className="fixed bottom-22 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 md:w-[420px] h-[550px] rounded-3xl glass-card border border-[#D4A64A]/40 shadow-2xl flex flex-col overflow-hidden bg-[#0B1220]/98 backdrop-blur-2xl"
+            className="fixed bottom-22 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 md:w-[420px] h-[550px] max-h-[calc(100dvh-7rem)] rounded-3xl glass-card border border-[#D4A64A]/40 shadow-2xl flex flex-col overflow-hidden bg-[#0B1220]/98 backdrop-blur-2xl"
           >
             {/* Header with Direct Hotline & WhatsApp Shortcuts */}
             <div className="p-3.5 bg-gradient-to-r from-[#D4A64A]/20 via-amber-500/10 to-transparent border-b border-white/10 flex items-center justify-between">

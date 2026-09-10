@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image, X, ZoomIn, Sparkles } from 'lucide-react';
@@ -6,6 +7,7 @@ import PageTransition from '../components/PageTransition';
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [activeImage, setActiveImage] = useState(null);
+  useScrollLock(!!activeImage);
 
   const galleryItems = [
     {
