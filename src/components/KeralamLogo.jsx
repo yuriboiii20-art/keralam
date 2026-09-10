@@ -11,7 +11,7 @@ export function LogoArtwork({ frame: elapsedFrame = LOGO_DURATION - 1, caption =
   const frame = elapsedFrame / 1.5;
   const id = useId().replace(/:/g, '');
   return (
-    <svg viewBox="0 0 1400 600" width="100%" height="100%" role="img" aria-label="Keralam PG — AAFA Coliving">
+    <svg viewBox="0 0 1400 600" width="100%" height="100%" role="img" aria-label="Kerala PG — AAFA Coliving">
       <defs>
         <linearGradient id={`${id}-light`}><stop stopColor={gold} stopOpacity="0"/><stop offset=".5" stopColor="#FFF0BF"/><stop offset="1" stopColor={gold} stopOpacity="0"/></linearGradient>
         <clipPath id={`${id}-house`}><path d={house}/></clipPath>
@@ -22,13 +22,13 @@ export function LogoArtwork({ frame: elapsedFrame = LOGO_DURATION - 1, caption =
         <g clipPath={`url(#${id}-house)`} opacity={interpolate(frame, [60, 76, 105], [0, .6, 0], timing)}>
           <rect x={interpolate(frame, [60, 105], [460, 650], timing)} y="180" width="35" height="150" fill={`url(#${id}-light)`}/>
         </g>
-        {/* Sized as complete text runs so the house A has equal optical gaps. */}
+        {/* Sized as complete text runs so the house A has equal optical gaps: KER - [House A] - LA   PG */}
         <g fill={ivory} fontFamily="Arial, Helvetica, sans-serif" fontSize="158" fontWeight="400">
           <text x="185" y="315" textLength="290" lengthAdjust="spacingAndGlyphs" style={{ opacity: interpolate(frame, [22, 62], [0, 1], timing), translate: `0px ${interpolate(frame, [22, 62], [18, 0], timing)}px` }}>KER</text>
-          <text x="614" y="315" textLength="318" lengthAdjust="spacingAndGlyphs" style={{ opacity: interpolate(frame, [32, 72], [0, 1], timing), translate: `0px ${interpolate(frame, [32, 72], [18, 0], timing)}px` }}>LAM</text>
+          <text x="614" y="315" textLength="195" lengthAdjust="spacingAndGlyphs" style={{ opacity: interpolate(frame, [32, 72], [0, 1], timing), translate: `0px ${interpolate(frame, [32, 72], [18, 0], timing)}px` }}>LA</text>
         </g>
-        <text x="962" y="315" fill={gold} fontFamily="Arial, Helvetica, sans-serif" fontSize="158" fontWeight="400" style={{ opacity: interpolate(frame, [48, 82], [0, 1], timing), translate: `0px ${interpolate(frame, [48, 82], [12, 0], timing)}px` }}>PG</text>
-        <text x="688" y="382" textAnchor="middle" fill={ivory} fontFamily="Arial, Helvetica, sans-serif" fontSize="25" letterSpacing="9" style={{ opacity: interpolate(frame, [65, 99], [0, 1], timing), translate: `0px ${interpolate(frame, [65, 99], [10, 0], timing)}px` }}>{caption}</text>
+        <text x="865" y="315" fill={gold} fontFamily="Arial, Helvetica, sans-serif" fontSize="158" fontWeight="400" textLength="215" lengthAdjust="spacingAndGlyphs" style={{ opacity: interpolate(frame, [48, 82], [0, 1], timing), translate: `0px ${interpolate(frame, [48, 82], [12, 0], timing)}px` }}>PG</text>
+        <text x="635" y="382" textAnchor="middle" fill={ivory} fontFamily="Arial, Helvetica, sans-serif" fontSize="25" letterSpacing="9" style={{ opacity: interpolate(frame, [65, 99], [0, 1], timing), translate: `0px ${interpolate(frame, [65, 99], [10, 0], timing)}px` }}>{caption}</text>
       </g>
     </svg>
   );
@@ -42,27 +42,27 @@ export function LogoAnimation() {
 export const HOUSE_PATH = house;
 
 /**
- * Signature vector wordmark for KERALAM PG where the house path forms the letter 'A'
+ * Signature vector wordmark for KERALA PG where the house path forms the letter 'A' (KER - [House A] - LA   PG)
  */
 export function KeralamWordmark({ className = 'h-4 sm:h-5 w-auto' }) {
   return (
     <svg
-      viewBox="170 175 1120 160"
+      viewBox="170 175 950 160"
       className={className}
       role="img"
-      aria-label="Keralam PG"
+      aria-label="Kerala PG"
     >
       <g transform="translate(12 0)">
         {/* House 'A' */}
         <path d={house} fill={gold} />
-        {/* KER and LAM text */}
+        {/* KER and LA text */}
         <g fill={ivory} fontFamily="Arial, Helvetica, sans-serif" fontSize="158" fontWeight="400">
           <text x="185" y="315" textLength="290" lengthAdjust="spacingAndGlyphs">KER</text>
-          <text x="614" y="315" textLength="318" lengthAdjust="spacingAndGlyphs">LAM</text>
+          <text x="614" y="315" textLength="195" lengthAdjust="spacingAndGlyphs">LA</text>
         </g>
-        {/* PG text in gold - ample horizontal span to prevent G clipping */}
+        {/* PG text in gold with refined breathing space */}
         <text
-          x="962"
+          x="865"
           y="315"
           fill={gold}
           fontFamily="Arial, Helvetica, sans-serif"
@@ -92,7 +92,7 @@ export function KeralamMark({ className = 'w-4.5 h-4.5' }) {
 /**
  * Header / Navbar Logo Lockup with:
  * - Iconic Kerala house 'A' badge
- * - Signature KERALAM PG vector wordmark
+ * - Signature KERALA PG vector wordmark
  * - Subtitle caption (e.g. "Jigani • Pan-India")
  */
 export function KeralamLogo({
@@ -150,7 +150,12 @@ export function KeralamLogo({
   );
 }
 
+export const KeralaLogo = KeralamLogo;
+export const KeralaWordmark = KeralamWordmark;
+export const KeralaMark = KeralamMark;
+
 export default KeralamLogo;
+
 
 
 

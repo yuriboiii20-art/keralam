@@ -213,7 +213,7 @@ export default function Home({ onOpenBooking }) {
           <button
             onClick={() => setIsFilterModalOpen(true)}
             className="px-3 py-1.5 rounded-xl bg-[#D4A64A]/15 hover:bg-[#D4A64A]/25 border border-[#D4A64A]/40 text-[#D4A64A] text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 shadow-sm"
-            title="Filter by City, PG Type and Sharing"
+            title="Filter by City, Type, Room Type and Sharing"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Filter</span>
@@ -569,7 +569,7 @@ export default function Home({ onOpenBooking }) {
                 onClick={() => setIsFilterModalOpen(true)}
                 className="px-4 sm:px-5 py-3.5 sm:py-4 rounded-2xl glass-card border border-[#D4A64A]/50 text-[#D4A64A] font-bold text-sm hover:bg-[#D4A64A]/15 hover:scale-105 transition-all flex items-center gap-2 shadow-lg"
                 data-cursor="expand"
-                title="Filter by City, PG Type, and Sharing"
+                title="Filter by City, Type, Room Type, and Sharing"
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 <span>Filter</span>
