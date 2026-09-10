@@ -288,16 +288,20 @@ export default function Home({ onOpenBooking }) {
               </div>
 
               <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-                <div>
+                <div className="min-w-0">
                   <span className="text-[9px] font-mono text-[#FAF7F0]/60 uppercase">Rent</span>
-                  <p className="text-base font-extrabold text-[#D4A64A] font-sora">
-                    {room.price} <span className="text-[10px] font-normal text-[#FAF7F0]/60">/{room.period}</span>
+                  <p className={`font-extrabold text-[#D4A64A] font-sora truncate ${
+                    room.id === '1bhk-suite' ? 'text-xs sm:text-sm' : 'text-base'
+                  }`}>
+                    {room.price} {room.id !== '1bhk-suite' && (
+                      <span className="text-[10px] font-normal text-[#FAF7F0]/60">/{room.period}</span>
+                    )}
                   </p>
                 </div>
 
                 <button
                   onClick={() => onOpenBooking(room.title)}
-                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] font-bold text-xs shadow-md shadow-[#D4A64A]/25 hover:scale-105 transition-all"
+                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] font-bold text-xs shadow-md shadow-[#D4A64A]/25 hover:scale-105 transition-all whitespace-nowrap shrink-0"
                   data-cursor="expand"
                 >
                   Book Now
