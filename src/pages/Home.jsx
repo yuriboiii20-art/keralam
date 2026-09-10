@@ -294,7 +294,9 @@ export default function Home({ onOpenBooking }) {
                   <p className={`font-extrabold text-[#D4A64A] font-sora truncate ${
                     room.id === '1bhk-suite' ? 'text-xs sm:text-sm' : 'text-base'
                   }`}>
-                    {room.price} <span className="text-[10px] font-normal text-[#FAF7F0]/60">/{room.period}</span>
+                    {room.price} {room.id !== '1bhk-suite' && (
+                      <span className="text-[10px] font-normal text-[#FAF7F0]/60">/{room.period}</span>
+                    )}
                   </p>
                 </div>
 
