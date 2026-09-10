@@ -44,7 +44,7 @@ export default function CareersPage() {
         </div>
 
         {/* Benefits for Property Owners */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-16">
           {[
             { title: 'Guaranteed 100% Fixed Rental Yield', desc: 'Zero vacancy risk. Long-term corporate master lease contracts backed by bank guarantees.' },
             { title: 'Full Property Maintenance', desc: 'Aafa team handles deep cleaning, plumbing, electrical, and structural upkeep at zero cost to you.' },
@@ -56,14 +56,14 @@ export default function CareersPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="glass-card glass-card-hover rounded-3xl p-8 border border-white/10 flex flex-col justify-between"
+              className="glass-card glass-card-hover rounded-2xl p-4.5 sm:p-5 border border-white/10 flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#D4A64A]/20 border border-[#D4A64A]/40 text-[#D4A64A] flex items-center justify-center mb-4">
-                  <Award className="w-6 h-6" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#D4A64A]/20 border border-[#D4A64A]/40 text-[#D4A64A] flex items-center justify-center mb-3">
+                  <Award className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                 </div>
-                <h3 className="text-lg font-bold font-sora text-[#FAF7F0] mb-2">{item.title}</h3>
-                <p className="text-xs text-[#FAF7F0]/75 leading-relaxed">{item.desc}</p>
+                <h3 className="text-sm sm:text-base font-bold font-sora text-[#FAF7F0] mb-1.5 leading-snug">{item.title}</h3>
+                <p className="text-[11px] sm:text-xs text-[#FAF7F0]/75 leading-relaxed">{item.desc}</p>
               </div>
             </motion.div>
           ))}
