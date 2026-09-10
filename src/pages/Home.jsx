@@ -298,7 +298,9 @@ export default function Home({ onOpenBooking }) {
 
                 <button
                   onClick={() => onOpenBooking(room.title)}
-                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] font-bold text-xs shadow-md shadow-[#D4A64A]/25 hover:scale-105 transition-all"
+                  className={`px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] font-bold text-xs shadow-md shadow-[#D4A64A]/25 hover:scale-105 transition-all ${
+                    room.id === '1bhk-suite' ? 'self-end' : ''
+                  }`}
                   data-cursor="expand"
                 >
                   Book Now
