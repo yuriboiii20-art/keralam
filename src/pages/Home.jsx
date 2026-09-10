@@ -31,10 +31,10 @@ export default function Home({ onOpenBooking }) {
   const [diningSubTab, setDiningSubTab] = useState('live-kitchen'); // 'live-kitchen' | 'dining-marquee'
   const [campusSubTab, setCampusSubTab] = useState('commute'); // 'commute' | 'amenities' | 'comparison'
   const [reviewsSubTab, setReviewsSubTab] = useState('testimonials'); // 'testimonials' | 'faq' | 'expansion'
-  
+
   // Browsing Mode: 'compact' (low scroll interactive deck) or 'expanded' (full sequential scroll)
   const [displayMode, setDisplayMode] = useState('compact');
-  
+
   // FAQ Quick Search & Filter
   const [faqSearch, setFaqSearch] = useState('');
 
@@ -228,11 +228,10 @@ export default function Home({ onOpenBooking }) {
             <button
               key={tab.id}
               onClick={() => setRoomCategoryTab(tab.id)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                roomCategoryTab === tab.id
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${roomCategoryTab === tab.id
                   ? 'bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] shadow-md shadow-[#D4A64A]/30 scale-105'
                   : 'glass-card text-[#FAF7F0]/70 hover:text-[#FAF7F0]'
-              }`}
+                }`}
               data-cursor="expand"
             >
               {tab.label}
@@ -521,10 +520,10 @@ export default function Home({ onOpenBooking }) {
   return (
     <PageTransition>
       <div className="relative z-10 overflow-hidden">
-        
+
         {/* HERO SECTION */}
         <section className="relative pt-32 pb-16 px-4 sm:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
-          
+
           {/* Left Text Column */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -532,7 +531,7 @@ export default function Home({ onOpenBooking }) {
             transition={{ duration: 0.7 }}
             className="lg:w-1/2 flex flex-col items-start text-left"
           >
-            
+
             {/* Top Pill Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-6">
               <Sparkles className="w-4 h-4 text-[#D4A64A]" />
@@ -541,7 +540,7 @@ export default function Home({ onOpenBooking }) {
 
             {/* Master Headline */}
             <h1 className="text-4xl sm:text-6xl font-extrabold text-[#FAF7F0] font-sora tracking-tight leading-[1.15] mb-6">
-              Aafa Coliving — <br />
+              Aafa Coliving  <br />
               <span className="text-gradient-gold">Your Home Away From Home</span>
             </h1>
 
@@ -635,11 +634,11 @@ export default function Home({ onOpenBooking }) {
 
         {/* INTERACTIVE EXPERIENCE HUB (LOW-SCROLL WORKSPACE) */}
         <section id="experience-hub" className="py-16 px-4 sm:px-8 max-w-7xl mx-auto">
-          
+
           {/* Top Control Bar: Master Deck Switcher & Display Mode Toggle */}
           <div className="rounded-3xl glass-card border border-[#D4A64A]/30 p-4 sm:p-6 mb-10 shadow-2xl bg-gradient-to-r from-[#0B1220]/90 via-[#0E172A]/90 to-[#0B1220]/90">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              
+
               {/* Master 4 Decks */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full md:w-auto">
                 {masterDecks.map((deck) => {
@@ -649,18 +648,16 @@ export default function Home({ onOpenBooking }) {
                     <button
                       key={deck.id}
                       onClick={() => setActiveMasterDeck(deck.id)}
-                      className={`p-3 sm:p-4 rounded-2xl text-left transition-all border relative flex flex-col justify-between ${
-                        isActive
+                      className={`p-3 sm:p-4 rounded-2xl text-left transition-all border relative flex flex-col justify-between ${isActive
                           ? 'bg-gradient-to-br from-[#D4A64A]/30 via-amber-500/15 to-[#D4A64A]/5 border-[#D4A64A] shadow-lg shadow-[#D4A64A]/25 scale-[1.02]'
                           : 'glass-card border-white/10 hover:border-white/20'
-                      }`}
+                        }`}
                       data-cursor="expand"
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${isActive ? 'text-[#D4A64A]' : 'text-white/60'}`} />
-                        <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full ${
-                          isActive ? 'bg-[#D4A64A] text-[#0B1220] font-bold' : 'bg-white/10 text-white/60'
-                        }`}>
+                        <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full ${isActive ? 'bg-[#D4A64A] text-[#0B1220] font-bold' : 'bg-white/10 text-white/60'
+                          }`}>
                           {deck.badge}
                         </span>
                       </div>
@@ -681,11 +678,10 @@ export default function Home({ onOpenBooking }) {
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-2xl shrink-0 self-end md:self-center">
                 <button
                   onClick={() => setDisplayMode('compact')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    displayMode === 'compact'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${displayMode === 'compact'
                       ? 'bg-[#D4A64A] text-[#0B1220] shadow-sm'
                       : 'text-white/70 hover:text-white'
-                  }`}
+                    }`}
                   title="Low-Scroll Interactive Tabs"
                 >
                   <Layers className="w-3.5 h-3.5" />
@@ -693,11 +689,10 @@ export default function Home({ onOpenBooking }) {
                 </button>
                 <button
                   onClick={() => setDisplayMode('expanded')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    displayMode === 'expanded'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${displayMode === 'expanded'
                       ? 'bg-[#D4A64A] text-[#0B1220] shadow-sm'
                       : 'text-white/70 hover:text-white'
-                  }`}
+                    }`}
                   title="Traditional Continuous View"
                 >
                   <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -711,7 +706,7 @@ export default function Home({ onOpenBooking }) {
           {/* MAIN DECK CONTENT CONTAINER */}
           {displayMode === 'compact' ? (
             <div className="min-h-[500px]">
-              
+
               {/* DECK 1: LIVING & BUDGET */}
               {activeMasterDeck === 'living' && (
                 <motion.div
@@ -733,11 +728,10 @@ export default function Home({ onOpenBooking }) {
                       <button
                         key={st.id}
                         onClick={() => setLivingSubTab(st.id)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                          livingSubTab === st.id
+                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${livingSubTab === st.id
                             ? 'bg-[#D4A64A] text-[#0B1220] shadow-md shadow-[#D4A64A]/30'
                             : 'text-white/70 hover:text-white'
-                        }`}
+                          }`}
                       >
                         {st.label}
                       </button>
@@ -781,11 +775,10 @@ export default function Home({ onOpenBooking }) {
                       <button
                         key={st.id}
                         onClick={() => setDiningSubTab(st.id)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                          diningSubTab === st.id
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${diningSubTab === st.id
                             ? 'bg-[#D4A64A] text-[#0B1220] shadow-md shadow-[#D4A64A]/30'
                             : 'text-white/70 hover:text-white'
-                        }`}
+                          }`}
                       >
                         {st.label}
                       </button>
@@ -823,11 +816,10 @@ export default function Home({ onOpenBooking }) {
                       <button
                         key={st.id}
                         onClick={() => setCampusSubTab(st.id)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                          campusSubTab === st.id
+                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${campusSubTab === st.id
                             ? 'bg-[#D4A64A] text-[#0B1220] shadow-md shadow-[#D4A64A]/30'
                             : 'text-white/70 hover:text-white'
-                        }`}
+                          }`}
                       >
                         {st.label}
                       </button>
@@ -862,11 +854,10 @@ export default function Home({ onOpenBooking }) {
                       <button
                         key={st.id}
                         onClick={() => setReviewsSubTab(st.id)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                          reviewsSubTab === st.id
+                        className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${reviewsSubTab === st.id
                             ? 'bg-[#D4A64A] text-[#0B1220] shadow-md shadow-[#D4A64A]/30'
                             : 'text-white/70 hover:text-white'
-                        }`}
+                          }`}
                       >
                         {st.label}
                       </button>
