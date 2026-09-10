@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Calendar, Phone, Menu, X, ArrowRight, ChevronDown, MapPin, Sparkles, Home as HomeIcon, Utensils, ShieldCheck, Star, BookOpen, Building2, UserCheck, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Aafa3DLogo from './Aafa3DLogo';
+import KeralamLogo from './KeralamLogo';
 import LocationBar from './LocationBar';
 import { locations } from '../data/locationsData';
 
@@ -68,22 +68,9 @@ export default function Navbar({ onOpenBooking }) {
         >
           <div className="flex items-center justify-between gap-3">
             
-            {/* Logo with 3D Extruded Logo */}
-            <Link to="/" className="flex items-center gap-2 sm:gap-3 group shrink-0" data-cursor="expand">
-              <Aafa3DLogo size="small" />
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-base sm:text-xl tracking-tight text-[#FAF7F0] font-sora">
-                    AAFA
-                  </span>
-                  <span className="text-[9px] sm:text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-[#D4A64A]/15 text-[#D4A64A] border border-[#D4A64A]/30 font-mono">
-                    COLIVING
-                  </span>
-                </div>
-                <p className="text-[9px] sm:text-[10px] text-[#FAF7F0]/60 tracking-wider font-mono uppercase">
-                  Jigani • Pan-India
-                </p>
-              </div>
+            {/* Keralam Logo with Jigani Caption */}
+            <Link to="/" className="flex items-center group shrink-0" data-cursor="expand">
+              <KeralamLogo caption="Jigani • Pan-India" />
             </Link>
 
             {/* Desktop Navigation Bar */}

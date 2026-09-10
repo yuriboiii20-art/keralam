@@ -1,0 +1,9 @@
+.keralam-intro{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0B1220;color:#FAF7F0}
+.keralam-intro__ambient{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 20% 40%,rgba(212,166,74,.09),transparent 55%),radial-gradient(ellipse at 85% 75%,rgba(37,99,235,.08),transparent 55%),radial-gradient(ellipse at 50% -20%,rgba(30,41,59,.5),transparent 70%)}
+.keralam-intro__content{position:relative;width:min(1200px,100%);text-align:center;pointer-events:none}
+.keralam-intro__welcome{margin:0;color:#D4A64A;font:500 10px/1.5 'Inter',Arial,sans-serif;letter-spacing:5px}
+.keralam-intro__caption{margin:0;padding:0 24px;color:rgba(250,247,240,.55);font:400 clamp(13px,1.5vw,18px)/1.7 'Inter',Arial,sans-serif}
+.keralam-intro__skip{position:absolute;right:clamp(20px,4vw,60px);bottom:clamp(24px,4vw,48px);display:flex;gap:15px;align-items:center;padding:11px 18px;border:1px solid rgba(212,166,74,.3);border-radius:30px;background:rgba(250,247,240,.03);color:#D4A64A;font:500 11px/1.5 'Inter',Arial,sans-serif;cursor:pointer}
+.keralam-intro__skip:hover{background:rgba(212,166,74,.12)}
+@media(max-width:600px){.keralam-intro__welcome{font-size:9px;letter-spacing:3px}.keralam-intro__caption{max-width:290px;margin:24px auto 0}.keralam-intro__content>div{margin:20px 0}}
+@media(prefers-reduced-motion:reduce){.keralam-intro{display:none}}

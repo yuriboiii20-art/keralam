@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, MessageSquare, ArrowUp, Navigation, Clock, Sparkles, Lock, ShieldCheck, Star, Award, CheckCircle2, HeartHandshake } from 'lucide-react';
-import Aafa3DLogo from './Aafa3DLogo';
+import KeralamLogo from './KeralamLogo';
 
 export default function Footer({ onOpenBooking, onOpenAdminCMS }) {
   const scrollToTop = () => {
@@ -108,21 +108,8 @@ export default function Footer({ onOpenBooking, onOpenAdminCMS }) {
         {/* Column 1: Brand & Trust Badges (5 cols) */}
         <div className="sm:col-span-2 lg:col-span-4 flex flex-col items-start">
           
-          <Link to="/" className="flex items-center gap-3 mb-4 group" data-cursor="expand">
-            <Aafa3DLogo size="small" />
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-xl tracking-tight text-[#FAF7F0] font-sora">
-                  AAFA
-                </span>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#D4A64A]/20 text-[#D4A64A] border border-[#D4A64A]/40 font-mono">
-                  COLIVING
-                </span>
-              </div>
-              <p className="text-[10px] text-[#FAF7F0]/60 font-mono tracking-wider uppercase">
-                Jigani • Near HCL Gate
-              </p>
-            </div>
+          <Link to="/" className="flex items-center mb-4 group" data-cursor="expand">
+            <KeralamLogo caption="Jigani • Near HCL Gate" />
           </Link>
 
           <p className="text-[#D4A64A] text-xs font-semibold leading-relaxed mb-3 italic">
