@@ -6,6 +6,7 @@ export default function FloatingBackground() {
   const cursorBlobRef = useRef(null);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return;
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
       const targetX = clientX - 150;
@@ -16,6 +17,7 @@ export default function FloatingBackground() {
           x: targetX,
           y: targetY,
           duration: 1.8,
+          overwrite: 'auto',
           ease: 'power2.out',
         });
       }

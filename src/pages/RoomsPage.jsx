@@ -69,7 +69,7 @@ export default function RoomsPage({ onOpenBooking }) {
 
   const handleWhatsApp = (title) => {
     const text = encodeURIComponent(`Hello Aafa Coliving Team! I am interested in checking availability for *${title}* in Jigani. Could you share current move-in dates?`);
-    window.open(`https://wa.me/918747049377?text=${text}`, '_blank');
+    window.open(`https://wa.me/918747049377?text=${text}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

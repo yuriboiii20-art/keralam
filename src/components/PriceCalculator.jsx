@@ -22,7 +22,7 @@ export default function PriceCalculator({ onOpenBooking }) {
     const text = encodeURIComponent(
       `Hello Aafa Coliving Team! I calculated an estimate on your website for *${selectedRate.name}* for *${durationMonths} ${isDaily ? (durationMonths === 1 ? 'day' : 'days') : (durationMonths === 1 ? 'month' : 'months')}* (Est. Total: ₹${totalCost.toLocaleString('en-IN')}).\n\nIs this plan available for immediate move-in?`
     );
-    window.open(`https://wa.me/918747049377?text=${text}`, '_blank');
+    window.open(`https://wa.me/918747049377?text=${text}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

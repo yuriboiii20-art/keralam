@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -7,6 +8,7 @@ import {
 import { pgListings, citiesList } from '../data/pgListingsData';
 
 export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
+  useScrollLock(isOpen);
   // Filter Selection State
   const [selectedCity, setSelectedCity] = useState('Bengaluru');
   const [selectedGender, setSelectedGender] = useState('all'); // 'all' | 'boys' | 'girls' | 'coliving'
@@ -23,13 +25,10 @@ export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
       if (e.key === 'Escape') onClose();
     };
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.body.style.overflow = '';
+
     }
     return () => {
-      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
@@ -77,7 +76,7 @@ export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
     const text = encodeURIComponent(
       `Hello Aafa Coliving, I am inquiring about ${listing.name} in ${listing.city} (${listing.genderLabel}, ${listing.sharingLabel}). Is there current availability?`
     );
-    window.open(`https://wa.me/918747049377?text=${text}`, '_blank');
+    window.open(`https://wa.me/918747049377?text=${text}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleResetFilters = () => {

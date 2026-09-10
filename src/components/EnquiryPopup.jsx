@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -5,6 +6,7 @@ import { X, Calendar, User, Phone, Mail, CheckCircle2, Sparkles, Send, Clock, Me
 import confetti from 'canvas-confetti';
 
 export default function EnquiryPopup({ isOpen, onClose }) {
+  useScrollLock(isOpen);
   const [submitted, setSubmitted] = useState(false);
   const [refCode, setRefCode] = useState('');
   const [formData, setFormData] = useState(null);
@@ -59,7 +61,7 @@ export default function EnquiryPopup({ isOpen, onClose }) {
       `📍 *Campus:* Sannidhi Layout, Jigani near HCL Gate`
     )}`;
     setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }, 600);
   };
 

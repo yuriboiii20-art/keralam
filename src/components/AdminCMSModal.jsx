@@ -1,9 +1,11 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Save, Edit, RefreshCw, CheckCircle2, Sparkles, Utensils, DollarSign, Lock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function AdminCMSModal({ isOpen, onClose }) {
+  useScrollLock(isOpen);
   const [activeTab, setActiveTab] = useState('prices'); // 'prices' | 'food'
   const [savedSuccess, setSavedSuccess] = useState(false);
 

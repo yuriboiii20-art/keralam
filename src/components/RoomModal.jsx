@@ -1,8 +1,10 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, ShieldCheck, Sparkles, Calendar, ChevronRight, ChevronLeft, Bed, Tv, Wifi, Wind } from 'lucide-react';
 
 export default function RoomModal({ room, onClose, onBookNow }) {
+  useScrollLock(!!room);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (!room) return null;

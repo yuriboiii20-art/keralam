@@ -1,3 +1,4 @@
+import useScrollLock from '../hooks/useScrollLock';
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -5,6 +6,7 @@ import { MapPin, Search, Sparkles, ChevronRight, CheckCircle2, Bell, Building2, 
 import { locations } from '../data/locationsData';
 
 export default function LocationBar({ isOpen, onClose, onSelectCity }) {
+  useScrollLock(isOpen);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all'); // 'all' | 'live' | 'upcoming'
 

@@ -5,7 +5,7 @@ import KeralamLogo from './KeralamLogo';
 
 export default function Footer({ onOpenBooking, onOpenAdminCMS }) {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   const socialLinks = [
@@ -262,14 +262,14 @@ export default function Footer({ onOpenBooking, onOpenAdminCMS }) {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             <span>All Systems Operational</span>
           </span>
-          <button
+          {import.meta.env.DEV && <button
             onClick={onOpenAdminCMS}
             className="px-2.5 py-1 rounded-lg bg-[#D4A64A]/15 text-[#D4A64A] border border-[#D4A64A]/30 hover:bg-[#D4A64A]/30 transition-all text-[10px] font-bold flex items-center gap-1"
             data-cursor="expand"
           >
             <Lock className="w-3 h-3" />
             <span>Admin CMS</span>
-          </button>
+          </button>}
         </div>
         
         <button
