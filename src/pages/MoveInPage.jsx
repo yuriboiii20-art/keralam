@@ -37,7 +37,7 @@ export default function MoveInPage({ onOpenBooking }) {
         </div>
 
         {/* 4-Step Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-16">
           {steps.map((s, idx) => (
             <motion.div
               key={idx}
@@ -45,14 +45,14 @@ export default function MoveInPage({ onOpenBooking }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="glass-card glass-card-hover rounded-3xl p-6 border border-white/10 flex flex-col justify-between"
+              className="glass-card glass-card-hover rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between"
             >
               <div>
-                <span className="text-3xl font-extrabold text-[#D4A64A] font-mono block mb-3">
+                <span className="text-2xl font-extrabold text-[#D4A64A] font-mono block mb-2">
                   {s.num}
                 </span>
-                <h3 className="text-lg font-bold font-sora text-[#FAF7F0] mb-2">{s.title}</h3>
-                <p className="text-xs text-[#FAF7F0]/75 leading-relaxed">{s.desc}</p>
+                <h3 className="text-sm sm:text-base font-bold font-sora text-[#FAF7F0] mb-1.5 leading-snug">{s.title}</h3>
+                <p className="text-[11px] sm:text-xs text-[#FAF7F0]/75 leading-relaxed">{s.desc}</p>
               </div>
             </motion.div>
           ))}
