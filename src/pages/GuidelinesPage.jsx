@@ -32,7 +32,7 @@ export default function GuidelinesPage() {
         </div>
 
         {/* Rules Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-16">
           {rules.map((item, idx) => (
             <motion.div
               key={idx}
@@ -40,14 +40,14 @@ export default function GuidelinesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="glass-card rounded-3xl p-8 border border-white/10 flex items-start gap-5"
+              className="glass-card rounded-2xl p-4 sm:p-5 border border-white/10 flex items-start gap-3.5"
             >
-              <div className="w-12 h-12 rounded-2xl bg-[#D4A64A]/20 border border-[#D4A64A]/40 text-[#D4A64A] flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-6 h-6" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#D4A64A]/20 border border-[#D4A64A]/40 text-[#D4A64A] flex items-center justify-center shrink-0 mt-0.5">
+                <CheckCircle2 className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold font-sora text-[#FAF7F0] mb-2">{item.title}</h3>
-                <p className="text-xs text-[#FAF7F0]/75 leading-relaxed">{item.desc}</p>
+                <h3 className="text-sm sm:text-base font-bold font-sora text-[#FAF7F0] mb-1 leading-snug">{item.title}</h3>
+                <p className="text-[11px] sm:text-xs text-[#FAF7F0]/75 leading-relaxed">{item.desc}</p>
               </div>
             </motion.div>
           ))}
