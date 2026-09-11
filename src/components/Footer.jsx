@@ -43,10 +43,10 @@ export default function Footer({ onOpenBooking, onOpenAdminCMS }) {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-1 bg-gradient-to-r from-transparent via-[#D4A64A] to-transparent opacity-80" />
 
       {/* Top Action Callout Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-14">
-        <div className="rounded-3xl glass-card border border-[#D4A64A]/35 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl bg-gradient-to-r from-[#D4A64A]/15 via-transparent to-[#D4A64A]/10">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-8 mb-10 sm:mb-14">
+        <div className="rounded-3xl glass-card border border-[#D4A64A]/35 p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 shadow-2xl bg-gradient-to-r from-[#D4A64A]/15 via-transparent to-[#D4A64A]/10">
           
-          <div className="flex items-center gap-4 text-center md:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left">
             <div className="w-12 h-12 rounded-2xl bg-[#D4A64A]/20 border border-[#D4A64A]/40 text-[#D4A64A] flex items-center justify-center shrink-0 shadow-md">
               <Sparkles className="w-6 h-6" />
             </div>

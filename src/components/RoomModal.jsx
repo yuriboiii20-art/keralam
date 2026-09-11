@@ -11,7 +11,7 @@ export default function RoomModal({ room, onClose, onBookNow }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -26,22 +26,22 @@ export default function RoomModal({ room, onClose, onBookNow }) {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-4xl rounded-3xl glass-card border border-[#D4A64A]/30 p-6 sm:p-8 shadow-2xl z-10 my-8 overflow-hidden"
+          className="relative w-full max-w-4xl rounded-3xl glass-card border border-[#D4A64A]/30 p-4 sm:p-8 shadow-2xl z-10 my-auto overflow-y-auto max-h-[92vh]"
         >
           {/* Close Button with aria-label */}
           <button
             onClick={onClose}
             aria-label="Close Room Details Modal"
-            className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF7F0] transition-all z-20"
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF7F0] transition-all z-20"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8">
             
             {/* Left: Image Carousel */}
-            <div className="lg:col-span-7 flex flex-col gap-4">
-              <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden border border-white/15">
+            <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-4">
+              <div className="relative h-52 sm:h-96 rounded-2xl overflow-hidden border border-white/15">
                 <img
                   src={room.images[activeImageIndex] || room.image}
                   alt={`${room.title} interior preview`}

@@ -75,17 +75,17 @@ export default function AIChatbot({ onOpenBooking }) {
   return (
     <>
       {/* Unified Floating Trigger Button */}
-      <div className="fixed bottom-6 right-6 z-50 pointer-events-auto">
+      <div className="fixed bottom-20 sm:bottom-6 right-3 sm:right-6 z-50 pointer-events-auto">
         <motion.button
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="relative w-14 h-14 rounded-full bg-gradient-to-br from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] flex items-center justify-center shadow-[0_0_35px_rgba(212,166,74,0.6)] border-2 border-[#FAF7F0]/40 transition-transform"
+          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] flex items-center justify-center shadow-[0_0_35px_rgba(212,166,74,0.6)] border-2 border-[#FAF7F0]/40 transition-transform"
           aria-label="Open AI Concierge Chatbot & Front Desk"
           data-cursor="expand"
         >
           <span className="absolute -inset-1 rounded-full border border-[#D4A64A] animate-ping opacity-60" />
-          {isOpen ? <X className="w-6 h-6 stroke-[2.5]" /> : <Bot className="w-7 h-7 stroke-[2.5]" />}
+          {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" /> : <Bot className="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]" />}
           <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0B1220]" />
         </motion.button>
       </div>
@@ -98,7 +98,7 @@ export default function AIChatbot({ onOpenBooking }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-22 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 md:w-[420px] h-[550px] max-h-[calc(100dvh-7rem)] rounded-3xl border border-[#D4A64A]/40 shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl"
+            className="fixed bottom-36 sm:bottom-22 right-2 sm:right-6 z-50 w-[calc(100vw-1rem)] sm:w-96 md:w-[420px] h-[520px] max-h-[calc(100dvh-10rem)] sm:max-h-[calc(100dvh-7rem)] rounded-3xl border border-[#D4A64A]/40 shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl"
             style={{
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',

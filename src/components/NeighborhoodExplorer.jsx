@@ -76,27 +76,27 @@ export default function NeighborhoodExplorer() {
     : destinations.filter((d) => d.category === selectedCategory);
 
   return (
-    <section className="relative py-20 px-4 sm:px-8 max-w-7xl mx-auto z-10">
+    <section className="relative py-10 sm:py-20 px-3.5 sm:px-8 max-w-7xl mx-auto z-10">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
+      <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-4">
           <Navigation className="w-4 h-4 text-[#D4A64A]" />
           <span>Prime Jigani Location</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-4 font-sora tracking-tight">
+        <h2 className="text-2xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-3 sm:mb-4 font-sora tracking-tight">
           2-Minute Walk to <span className="text-gradient-gold">HCL Gate</span>
         </h2>
-        <p className="text-[#FAF7F0]/80 text-sm sm:text-base leading-relaxed">
+        <p className="text-[#FAF7F0]/80 text-xs sm:text-base leading-relaxed">
           Strategically located in Sannidhi Layout, Jigani — cut your daily commute to zero and reclaim your personal evening time.
         </p>
       </div>
 
       {/* Commute Mode + Category Switcher Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 p-4 rounded-3xl glass-card border border-[#D4A64A]/30">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 sm:mb-10 p-3 sm:p-4 rounded-3xl glass-card border border-[#D4A64A]/30">
         
         {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar">
           {[
             { id: 'all', label: 'All Places' },
             { id: 'tech', label: 'Tech & Offices' },

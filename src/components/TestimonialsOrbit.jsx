@@ -79,35 +79,35 @@ export default function TestimonialsOrbit() {
     : reviews.filter((r) => r.category === filter);
 
   return (
-    <section id="reviews" className="relative py-20 px-4 sm:px-8 max-w-7xl mx-auto z-10">
+    <section id="reviews" className="relative py-10 sm:py-20 px-3.5 sm:px-8 max-w-7xl mx-auto z-10">
       
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-4">
           <Star className="w-4 h-4 text-[#D4A64A] fill-[#D4A64A]" />
           <span>Resident Stories & Google Ratings</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-4 font-sora tracking-tight">
+        <h2 className="text-2xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-3 sm:mb-4 font-sora tracking-tight">
           Loved by <span className="text-gradient-gold">500+ Co-Movers</span>
         </h2>
-        <p className="text-[#FAF7F0]/80 text-sm sm:text-base leading-relaxed">
+        <p className="text-[#FAF7F0]/80 text-xs sm:text-base leading-relaxed">
           Here is what engineers, researchers, and creators say about daily living at Aafa Coliving Jigani.
         </p>
 
         {/* Rating Breakdown Pill */}
-        <div className="inline-flex items-center gap-4 mt-6 p-2.5 px-5 rounded-2xl glass-card border border-[#D4A64A]/30 text-xs">
+        <div className="flex flex-col sm:inline-flex sm:flex-row items-center gap-2 sm:gap-4 mt-4 sm:mt-6 p-2.5 px-4 sm:px-5 rounded-2xl glass-card border border-[#D4A64A]/30 text-xs">
           <div className="flex items-center gap-1">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-4 h-4 fill-[#D4A64A] text-[#D4A64A]" />
             ))}
           </div>
           <span className="font-bold text-[#FAF7F0] font-sora text-sm">4.9 / 5.0</span>
-          <span className="text-[#FAF7F0]/60 font-mono">140+ Verified Reviews on Google Maps</span>
+          <span className="text-[#FAF7F0]/60 font-mono text-[11px] sm:text-xs">140+ Verified Reviews on Google Maps</span>
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex justify-center gap-2.5 mb-10 overflow-x-auto pb-2">
+      <div className="flex justify-start sm:justify-center gap-2 sm:gap-2.5 mb-8 sm:mb-10 overflow-x-auto pb-2 no-scrollbar max-w-full">
         {[
           { id: 'all', label: 'All Reviews' },
           { id: 'wifi', label: '⚡ WFH & Wi-Fi' },

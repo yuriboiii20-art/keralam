@@ -248,7 +248,7 @@ export default function Home({ onOpenBooking }) {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full no-scrollbar">
           {/* Small Filter Button */}
           <button
             onClick={() => setIsFilterModalOpen(true)}
@@ -395,7 +395,7 @@ export default function Home({ onOpenBooking }) {
                   initial={{ opacity: 0, scale: 0.85, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.85, y: 10 }}
-                  className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-60 sm:w-64 rounded-2xl glass-card p-4 border border-[#D4A64A]/40 shadow-2xl text-left bg-[#0B1220]/95 z-30"
+                  className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-56 sm:w-64 max-w-[80vw] rounded-2xl glass-card p-3.5 sm:p-4 border border-[#D4A64A]/40 shadow-2xl text-left bg-[#0B1220]/95 z-30"
                 >
                   <h4 className="text-sm font-bold text-[#D4A64A] font-sora mb-1">{spot.title}</h4>
                   <p className="text-xs text-[#FAF7F0]/80 leading-relaxed">{spot.desc}</p>
@@ -566,7 +566,7 @@ export default function Home({ onOpenBooking }) {
       <div className="relative z-10 overflow-hidden">
 
         {/* HERO SECTION WITH IMMEDIATE "FIND YOUR SPACE" BOOKING & FILTER INTERFACE */}
-        <section className="relative pt-24 sm:pt-28 pb-8 px-4 sm:px-8 max-w-7xl mx-auto space-y-8">
+        <section className="relative pt-20 sm:pt-28 pb-6 sm:pb-8 px-3.5 sm:px-8 max-w-7xl mx-auto space-y-6 sm:space-y-8">
 
           {/* Hero Branding Header + 3D Canvas Row */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pb-2">
@@ -706,7 +706,7 @@ export default function Home({ onOpenBooking }) {
               </div>
 
               {/* Display Mode Toggle */}
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-2xl shrink-0 self-end md:self-center">
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-white/5 border border-white/10 p-1 sm:p-1.5 rounded-2xl shrink-0 self-center md:self-center">
                 <button
                   onClick={() => setDisplayMode('compact')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${displayMode === 'compact'
@@ -749,7 +749,7 @@ export default function Home({ onOpenBooking }) {
                   className="space-y-6"
                 >
                   {/* Sub-Tabs */}
-                  <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto overflow-x-auto">
+                  <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-full overflow-x-auto no-scrollbar sm:justify-center sm:mx-auto">
                     {[
                       { id: 'rooms', label: 'Rooms Preview' },
                       { id: 'calculator', label: 'Rate Calculator' },
@@ -798,7 +798,7 @@ export default function Home({ onOpenBooking }) {
                   className="space-y-6"
                 >
                   {/* Sub-Tabs */}
-                  <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto">
+                  <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-full overflow-x-auto no-scrollbar sm:justify-center sm:mx-auto">
                     {[
                       { id: 'live-kitchen', label: 'Today Live Kitchen' },
                       { id: 'dining-marquee', label: 'Kerala Dining Showcase' },
@@ -838,7 +838,7 @@ export default function Home({ onOpenBooking }) {
                   className="space-y-6"
                 >
                   {/* Sub-Tabs */}
-                  <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto overflow-x-auto">
+                  <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-full overflow-x-auto no-scrollbar sm:justify-center sm:mx-auto">
                     {[
                       { id: 'commute', label: 'Commute Radius (HCL Gate)' },
                       { id: 'amenities', label: 'Zero-Gravity Amenities' },
@@ -876,7 +876,7 @@ export default function Home({ onOpenBooking }) {
                   className="space-y-6"
                 >
                   {/* Sub-Tabs */}
-                  <div className="flex items-center justify-center gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-fit mx-auto overflow-x-auto">
+                  <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl glass-card border border-white/10 max-w-full overflow-x-auto no-scrollbar sm:justify-center sm:mx-auto">
                     {[
                       { id: 'testimonials', label: 'Resident Reviews' },
                       { id: 'faq', label: 'FAQ Finder' },

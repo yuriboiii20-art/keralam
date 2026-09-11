@@ -72,24 +72,24 @@ export default function TodayLiveKitchen() {
   const active = mealSchedule[currentMeal];
 
   return (
-    <section className="relative py-20 px-4 sm:px-8 max-w-7xl mx-auto z-10">
+    <section className="relative py-10 sm:py-20 px-3.5 sm:px-8 max-w-7xl mx-auto z-10">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-4">
           <ChefHat className="w-4 h-4 text-[#D4A64A]" />
           <span>Live In-House Kitchen</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-4 font-sora tracking-tight">
+        <h2 className="text-2xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-3 sm:mb-4 font-sora tracking-tight">
           What’s Cooking <span className="text-gradient-gold">Today at Aafa?</span>
         </h2>
-        <p className="text-[#FAF7F0]/80 text-sm sm:text-base leading-relaxed">
+        <p className="text-[#FAF7F0]/80 text-xs sm:text-base leading-relaxed">
           Prepared 3 times daily by dedicated Kerala chefs using pure coconut oil, fresh spices, and zero frozen shortcuts.
         </p>
       </div>
 
       {/* Meal Selection Tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6 sm:mb-8">
         {[
           { id: 'breakfast', label: '🌅 Breakfast', time: '7:30 - 9:30 AM' },
           { id: 'lunch', label: '☀️ Lunch', time: '12:30 - 2:30 PM' },
@@ -99,22 +99,17 @@ export default function TodayLiveKitchen() {
           <button
             key={tab.id}
             onClick={() => setCurrentMeal(tab.id)}
-            className={`p-4 rounded-2xl text-left transition-all border ${
+            className={`p-2.5 sm:p-3.5 rounded-2xl text-left border transition-all ${
               currentMeal === tab.id
-                ? 'bg-gradient-to-br from-[#D4A64A]/25 to-amber-500/10 border-[#D4A64A] shadow-lg shadow-[#D4A64A]/20 scale-[1.02]'
-                : 'glass-card border-white/10 hover:border-white/20'
+                ? 'bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] border-[#D4A64A] shadow-lg shadow-[#D4A64A]/30 scale-[1.02]'
+                : 'glass-card border-white/10 text-[#FAF7F0]/70 hover:text-[#FAF7F0]'
             }`}
             data-cursor="expand"
           >
-            <div className="flex items-center justify-between gap-1 mb-1">
-              <span className="text-xs sm:text-sm font-bold font-sora text-[#FAF7F0]">
-                {tab.label}
-              </span>
-              {currentMeal === tab.id && (
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              )}
-            </div>
-            <p className="text-[10px] font-mono text-[#D4A64A]">{tab.time}</p>
+            <span className="font-bold font-sora text-xs sm:text-sm block">{tab.label}</span>
+            <span className={`text-[10px] font-mono mt-0.5 block ${currentMeal === tab.id ? 'text-[#0B1220]/80 font-bold' : 'text-[#FAF7F0]/50'}`}>
+              {tab.time}
+            </span>
           </button>
         ))}
       </div>
@@ -125,7 +120,7 @@ export default function TodayLiveKitchen() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="rounded-3xl glass-card border border-[#D4A64A]/40 p-6 sm:p-10 shadow-2xl relative overflow-hidden"
+        className="rounded-3xl glass-card border border-[#D4A64A]/40 p-4 sm:p-10 shadow-2xl relative overflow-hidden"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           

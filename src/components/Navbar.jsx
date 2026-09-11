@@ -60,12 +60,12 @@ export default function Navbar({ onOpenBooking }) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-8 py-3 transition-all duration-300">
+      <header className="fixed top-0 left-0 right-0 z-50 px-0 sm:px-8 py-0 sm:py-3 transition-all duration-300">
         <div
-          className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 ${
+          className={`max-w-7xl mx-auto transition-all duration-300 ${
             scrolled
-              ? 'glass-nav shadow-2xl py-2 px-4 sm:px-6 border border-[#D4A64A]/30'
-              : 'bg-[#0B1220]/85 backdrop-blur-md py-2.5 px-4 sm:px-6 border border-[#FAF7F0]/10'
+              ? 'glass-nav shadow-2xl py-2.5 px-4 sm:px-6 rounded-none sm:rounded-2xl border-b sm:border border-[#D4A64A]/30'
+              : 'bg-[#0B1220]/95 sm:bg-[#0B1220]/85 backdrop-blur-md py-3 sm:py-2.5 px-4 sm:px-6 rounded-none sm:rounded-2xl border-b sm:border border-[#FAF7F0]/10'
           }`}
         >
           <div className="flex items-center justify-between gap-3">
@@ -296,7 +296,7 @@ export default function Navbar({ onOpenBooking }) {
               initial={{ opacity: 0, y: -15, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -15, scale: 0.98 }}
-              className="lg:hidden mt-2 max-w-7xl mx-auto rounded-3xl glass-nav p-5 border border-[#D4A64A]/30 shadow-2xl flex flex-col gap-3 max-h-[82vh] overflow-y-auto bg-[#0B1220]/95 backdrop-blur-2xl"
+              className="lg:hidden mt-2 mx-3 sm:mx-auto max-w-7xl rounded-2xl sm:rounded-3xl glass-nav p-4 sm:p-5 border border-[#D4A64A]/30 shadow-2xl flex flex-col gap-3 max-h-[80vh] overflow-y-auto bg-[#0B1220]/95 backdrop-blur-2xl"
             >
               {/* Mobile Location Quick Button */}
               <button
