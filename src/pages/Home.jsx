@@ -17,8 +17,9 @@ import FloatingQuickDock from '../components/FloatingQuickDock';
 import HomePgFilterModal from '../components/HomePgFilterModal';
 import FindYourSpacePanel from '../components/BookingFlow/FindYourSpacePanel';
 import MatchingRoomsSection from '../components/BookingFlow/MatchingRoomsSection';
-import StayPlanModal from '../components/BookingFlow/StayPlanModal';
 import RoomDetailsModal from '../components/BookingFlow/RoomDetailsModal';
+import StayPlanModal from '../components/BookingFlow/StayPlanModal';
+import FindSpaceLogo from '../components/FindSpaceLogo';
 import { locations } from '../data/locationsData';
 
 export default function Home({ onOpenBooking }) {
@@ -579,7 +580,7 @@ export default function Home({ onOpenBooking }) {
             >
               {/* Top Pill Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-[#D4A64A] text-[11px] font-semibold uppercase tracking-wider mb-3">
-                <Sparkles className="w-3 h-3 text-[#D4A64A]" />
+                <FindSpaceLogo className="w-3.5 h-3.5" />
                 <span>Jigani • 300m to HCL Gate</span>
               </div>
 
@@ -928,7 +929,7 @@ export default function Home({ onOpenBooking }) {
           <div className="rounded-3xl glass-card-glow border-2 border-[#D4A64A] p-8 sm:p-14 text-center relative overflow-hidden bg-gradient-to-br from-[#D4A64A]/20 via-[#0B1220] to-[#0B1220]">
             <div className="max-w-3xl mx-auto space-y-6">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4A64A]/20 text-[#D4A64A] border border-[#D4A64A]/40 text-xs font-mono font-bold uppercase">
-                <Sparkles className="w-4 h-4" />
+                <FindSpaceLogo className="w-4 h-4" />
                 <span>Move-In Ready Sanctuary</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold font-sora text-[#FAF7F0]">

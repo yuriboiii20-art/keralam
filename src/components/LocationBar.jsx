@@ -2,7 +2,8 @@ import useScrollLock from '../hooks/useScrollLock';
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Search, Sparkles, ChevronRight, CheckCircle2, Bell, Building2, Navigation, ArrowRight, X, ExternalLink } from 'lucide-react';
+import { MapPin, Search, ChevronRight, CheckCircle2, Bell, Building2, Navigation, ArrowRight, X, ExternalLink } from 'lucide-react';
+import FindSpaceLogo from './FindSpaceLogo';
 import { locations } from '../data/locationsData';
 
 export default function LocationBar({ isOpen, onClose, onSelectCity }) {
@@ -232,7 +233,7 @@ export default function LocationBar({ isOpen, onClose, onSelectCity }) {
           {/* Footer Quick Action */}
           <div className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2 text-[#FAF7F0]/75 text-center sm:text-left">
-              <Sparkles className="w-4 h-4 text-[#D4A64A] shrink-0" />
+              <FindSpaceLogo className="w-4 h-4 shrink-0" />
               <span>Headquarters: Sannidhi Layout, 300m from HCL Gate, Jigani, Bengaluru</span>
             </div>
 

@@ -77,10 +77,12 @@ export default function FindYourSpacePanel({
     >
       {/* Panel Top Heading & Stay Type Segmented Pills */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-[#D4A64A]/15 border border-[#D4A64A]/30 flex items-center justify-center text-[#D4A64A] shrink-0">
-            <Sparkles className="w-4 h-4" />
-          </div>
+        <div className="flex items-center gap-2.5">
+          <img
+            src="/find-space-logo.png"
+            alt="Find Your Space"
+            className="w-9 h-9 rounded-xl object-contain shadow-md shadow-[#D4A64A]/25 shrink-0 border border-[#D4A64A]/40"
+          />
           <div>
             <h3 className="text-base sm:text-lg font-bold font-sora text-[#FAF7F0] leading-tight">
               Find Your Space
