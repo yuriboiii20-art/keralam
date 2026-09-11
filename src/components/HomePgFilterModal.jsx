@@ -7,21 +7,18 @@ import {
 } from 'lucide-react';
 import useScrollLock from '../hooks/useScrollLock';
 import { pgListings, citiesList } from '../data/pgListingsData';
+import SimpleFilterCard from './SimpleFilterCard';
 
 export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
   useScrollLock(isOpen);
   const scrollContainerRef = useRef(null);
 
-  // Filter Selection State
+  // Simple Filter State (Matching Reference Design)
+  const [selectedCategory, setSelectedCategory] = useState('rooms'); // 'pg' | 'coliving' | 'rooms'
   const [selectedCity, setSelectedCity] = useState('Bengaluru');
+  const [selectedArea, setSelectedArea] = useState('Jigani');
   const [selectedGender, setSelectedGender] = useState('all'); // 'all' | 'boys' | 'girls' | 'coliving'
-  const [selectedRoomType, setSelectedRoomType] = useState('all'); // 'all' | '1bhk' | '2bhk' | '3bhk' | '1rk'
-  const [selectedSharing, setSelectedSharing] = useState('all'); // 'all' | '1' | '2' | '3' | '4'
-
-  // Post-Result Sorting & Refinement State
-  const [sortBy, setSortBy] = useState('default'); // 'default' | 'price-asc' | 'price-desc' | 'rating'
-  const [priceRange, setPriceRange] = useState('all'); // 'all' | 'under-7k' | '7k-10k' | 'above-10k'
-  const [premiumOnly, setPremiumOnly] = useState(false);
+  const [selectedSharing, setSelectedSharing] = useState('2'); // 'all' | '1' | '2' | '3' | '4'
 
   // Close on Escape key
   useEffect(() => {
@@ -36,64 +33,44 @@ export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
     };
   }, [isOpen, onClose]);
 
-  // Filter & Sort Logic
+  // Filter Logic
   const filteredAndSortedListings = useMemo(() => {
-    let result = pgListings.filter((item) => {
-      // 1. City Match
+    return pgListings.filter((item) => {
+      // 1. Category Filter (PG | Co-Living | Rooms)
+      if (selectedCategory === 'pg') {
+        if (item.genderType !== 'boys' && item.genderType !== 'girls') return false;
+      } else if (selectedCategory === 'coliving') {
+        if (item.genderType !== 'coliving') return false;
+      }
+      // "rooms" encompasses all room listings matching the city/area/sharing options
+
+      // 2. City Match
       if (selectedCity && selectedCity !== 'all' && item.city.toLowerCase() !== selectedCity.toLowerCase()) {
         return false;
       }
-      // 2. Gender / Type Match
+
+      // 3. Area Match
+      if (selectedArea && selectedArea !== 'all') {
+        const itemArea = (item.area || '').toLowerCase();
+        const targetArea = selectedArea.toLowerCase();
+        if (!itemArea.includes(targetArea)) {
+          return false;
+        }
+      }
+
+      // 4. Gender / Type Match
       if (selectedGender !== 'all' && item.genderType !== selectedGender) {
         return false;
       }
-      // 3. Room Type Match (1bhk, 2bhk, 3bhk, 1rk)
-      if (selectedRoomType !== 'all') {
-        const itemType = (item.roomType || '').toLowerCase();
-        const itemName = (item.name || '').toLowerCase();
-        const itemDesc = (item.desc || '').toLowerCase();
 
-        if (selectedRoomType === '1bhk') {
-          const isMatch = itemType === '1bhk' || itemName.includes('1bhk') || itemDesc.includes('1bhk') || item.sharing === 1;
-          if (!isMatch) return false;
-        } else if (selectedRoomType === '2bhk') {
-          const isMatch = itemType === '2bhk' || itemName.includes('2bhk') || itemDesc.includes('2bhk') || item.sharing === 2;
-          if (!isMatch) return false;
-        } else if (selectedRoomType === '3bhk') {
-          const isMatch = itemType === '3bhk' || itemName.includes('3bhk') || itemDesc.includes('3bhk') || item.sharing === 3;
-          if (!isMatch) return false;
-        } else if (selectedRoomType === '1rk') {
-          const isMatch = itemType === '1rk' || itemName.includes('1rk') || itemName.includes('studio') || itemDesc.includes('1rk') || itemDesc.includes('studio') || item.sharing === 4;
-          if (!isMatch) return false;
-        }
-      }
-      // 4. Sharing Match
+      // 5. Sharing Match
       if (selectedSharing !== 'all' && item.sharing !== Number(selectedSharing)) {
         return false;
       }
-      // 5. Post-Filter: Premium Only
-      if (premiumOnly && !item.isPremium) {
-        return false;
-      }
-      // 6. Post-Filter: Price Range
-      if (priceRange === 'under-7k' && item.price >= 7000) return false;
-      if (priceRange === '7k-10k' && (item.price < 7000 || item.price > 10000)) return false;
-      if (priceRange === 'above-10k' && item.price <= 10000) return false;
 
       return true;
     });
-
-    // Post-Result Sorting
-    if (sortBy === 'price-asc') {
-      result = [...result].sort((a, b) => a.price - b.price);
-    } else if (sortBy === 'price-desc') {
-      result = [...result].sort((a, b) => b.price - a.price);
-    } else if (sortBy === 'rating') {
-      result = [...result].sort((a, b) => b.rating - a.rating || b.reviewsCount - a.reviewsCount);
-    }
-
-    return result;
-  }, [selectedCity, selectedGender, selectedRoomType, selectedSharing, premiumOnly, priceRange, sortBy]);
+  }, [selectedCategory, selectedCity, selectedArea, selectedGender, selectedSharing]);
 
   const handleWhatsApp = (listing) => {
     const text = encodeURIComponent(
@@ -103,13 +80,11 @@ export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
   };
 
   const handleResetFilters = () => {
-    setSelectedCity('all');
+    setSelectedCategory('rooms');
+    setSelectedCity('Bengaluru');
+    setSelectedArea('Jigani');
     setSelectedGender('all');
-    setSelectedRoomType('all');
-    setSelectedSharing('all');
-    setSortBy('default');
-    setPriceRange('all');
-    setPremiumOnly(false);
+    setSelectedSharing('2');
   };
 
   const handleWheel = (e) => {
@@ -195,167 +170,40 @@ export default function HomePgFilterModal({ isOpen, onClose, onOpenBooking }) {
                 overscrollBehavior: 'contain'
               }}
             >
-              {/* 4 Compact Filter Boxes */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 p-3 rounded-2xl bg-[#0E172A] border border-white/10 shadow-sm">
-                
-                {/* 1. City Dropdown */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-mono font-bold text-[#D4A64A] uppercase flex items-center gap-1.5">
-                    <MapPin className="w-3 h-3 text-[#D4A64A]" />
-                    <span>City</span>
-                  </label>
-                  <select
-                    value={selectedCity}
-                    onChange={(e) => setSelectedCity(e.target.value)}
-                    className="w-full py-1.5 px-2.5 rounded-xl bg-[#131E32] border border-white/15 focus:border-[#D4A64A] text-xs text-[#FAF7F0] font-medium outline-none cursor-pointer h-9 transition-colors"
-                  >
-                    <option value="all">All Cities</option>
-                    {citiesList.map((city) => (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* 2. Type Dropdown */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-mono font-bold text-[#D4A64A] uppercase flex items-center gap-1.5">
-                    <Users className="w-3 h-3 text-[#D4A64A]" />
-                    <span>Type</span>
-                  </label>
-                  <select
-                    value={selectedGender}
-                    onChange={(e) => setSelectedGender(e.target.value)}
-                    className="w-full py-1.5 px-2.5 rounded-xl bg-[#131E32] border border-white/15 focus:border-[#D4A64A] text-xs text-[#FAF7F0] font-medium outline-none cursor-pointer h-9 transition-colors"
-                  >
-                    <option value="all">All Types</option>
-                    <option value="boys">Boys</option>
-                    <option value="girls">Girls</option>
-                    <option value="coliving">Coliving</option>
-                  </select>
-                </div>
-
-                {/* 3. Room Type Dropdown */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-mono font-bold text-[#D4A64A] uppercase flex items-center gap-1.5">
-                    <Building2 className="w-3 h-3 text-[#D4A64A]" />
-                    <span>Room Type</span>
-                  </label>
-                  <select
-                    value={selectedRoomType}
-                    onChange={(e) => setSelectedRoomType(e.target.value)}
-                    className="w-full py-1.5 px-2.5 rounded-xl bg-[#131E32] border border-white/15 focus:border-[#D4A64A] text-xs text-[#FAF7F0] font-medium outline-none cursor-pointer h-9 transition-colors"
-                  >
-                    <option value="all">All Room Types</option>
-                    <option value="1bhk">1 BHK</option>
-                    <option value="2bhk">2 BHK</option>
-                    <option value="3bhk">3 BHK</option>
-                    <option value="1rk">1 RK</option>
-                  </select>
-                </div>
-
-                {/* 4. Room Sharing Dropdown */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-mono font-bold text-[#D4A64A] uppercase flex items-center gap-1.5">
-                    <Bed className="w-3 h-3 text-[#D4A64A]" />
-                    <span>Room Sharing</span>
-                  </label>
-                  <select
-                    value={selectedSharing}
-                    onChange={(e) => setSelectedSharing(e.target.value)}
-                    className="w-full py-1.5 px-2.5 rounded-xl bg-[#131E32] border border-white/15 focus:border-[#D4A64A] text-xs text-[#FAF7F0] font-medium outline-none cursor-pointer h-9 transition-colors"
-                  >
-                    <option value="all">Any Sharing (1 - 4)</option>
-                    <option value="1">1 Sharing (Private)</option>
-                    <option value="2">2 Sharing (Twin)</option>
-                    <option value="3">3 Sharing (Triple)</option>
-                    <option value="4">4 Sharing (Quad)</option>
-                  </select>
-                </div>
-
+              {/* The Simple Filter Card (Matching Reference Design) */}
+              <div className="flex justify-center pt-1">
+                <SimpleFilterCard
+                  initialCategory={selectedCategory}
+                  initialCity={selectedCity}
+                  initialArea={selectedArea}
+                  initialType={selectedGender}
+                  initialSharing={selectedSharing}
+                  onSearch={(params) => {
+                    setSelectedCategory(params.category);
+                    setSelectedCity(params.city);
+                    setSelectedArea(params.area);
+                    setSelectedGender(params.type);
+                    setSelectedSharing(params.sharing);
+                    const el = document.getElementById('filter-results-anchor');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                />
               </div>
 
-              {/* Toolbar & Sort Controls */}
-              <div className="p-3 rounded-2xl bg-[#0E172A] border border-white/10 space-y-2.5">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
-                  <div className="text-xs text-[#FAF7F0]/80 font-mono flex items-center gap-1.5">
-                    <span className="font-bold text-[#D4A64A] text-sm">{filteredAndSortedListings.length}</span> properties found
-                  </div>
-
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <button
-                      onClick={() => setSortBy(sortBy === 'price-asc' ? 'default' : 'price-asc')}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
-                        sortBy === 'price-asc'
-                          ? 'bg-[#D4A64A] text-[#0B1220] font-bold'
-                          : 'bg-white/5 text-white/70 hover:text-white border border-white/10'
-                      }`}
-                    >
-                      <ArrowUpDown className="w-3 h-3" />
-                      <span>Low to High</span>
-                    </button>
-
-                    <button
-                      onClick={() => setSortBy(sortBy === 'price-desc' ? 'default' : 'price-desc')}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
-                        sortBy === 'price-desc'
-                          ? 'bg-[#D4A64A] text-[#0B1220] font-bold'
-                          : 'bg-white/5 text-white/70 hover:text-white border border-white/10'
-                      }`}
-                    >
-                      <ArrowUpDown className="w-3 h-3 rotate-180" />
-                      <span>High to Low</span>
-                    </button>
-
-                    <button
-                      onClick={() => setSortBy(sortBy === 'rating' ? 'default' : 'rating')}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
-                        sortBy === 'rating'
-                          ? 'bg-[#D4A64A] text-[#0B1220] font-bold'
-                          : 'bg-white/5 text-white/70 hover:text-white border border-white/10'
-                      }`}
-                    >
-                      <Star className="w-3 h-3 fill-current" />
-                      <span>Most Rated</span>
-                    </button>
-
-                    <button
-                      onClick={() => setPremiumOnly(!premiumOnly)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer ${
-                        premiumOnly
-                          ? 'bg-amber-400 text-[#0B1220] font-bold'
-                          : 'bg-white/5 text-white/70 hover:text-white border border-white/10'
-                      }`}
-                    >
-                      <ShieldCheck className="w-3 h-3" />
-                      <span>Premium</span>
-                    </button>
-                  </div>
+              {/* Results Header */}
+              <div id="filter-results-anchor" className="pt-2 flex items-center justify-between border-t border-white/10">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#FAF7F0]">
+                  <span className="font-bold text-[#D4A64A] text-base">{filteredAndSortedListings.length}</span>
+                  <span>{filteredAndSortedListings.length === 1 ? 'Space Available' : 'Spaces Available'} in {selectedCity === 'all' ? 'All Cities' : selectedCity}</span>
                 </div>
 
-                {/* Price Range Filter Pills */}
-                <div className="flex items-center gap-1.5 flex-wrap pt-2 border-t border-white/5">
-                  <span className="text-[10px] font-mono text-[#FAF7F0]/60 uppercase">Price:</span>
-                  {[
-                    { id: 'all', label: 'All Rates' },
-                    { id: 'under-7k', label: 'Under ₹7k' },
-                    { id: '7k-10k', label: '₹7k – ₹10k' },
-                    { id: 'above-10k', label: 'Above ₹10k' },
-                  ].map((pill) => (
-                    <button
-                      key={pill.id}
-                      onClick={() => setPriceRange(pill.id)}
-                      className={`px-2 py-0.5 rounded-md text-[11px] font-mono transition-all cursor-pointer ${
-                        priceRange === pill.id
-                          ? 'bg-[#D4A64A]/25 text-[#D4A64A] border border-[#D4A64A]/60 font-bold'
-                          : 'bg-white/5 text-white/60 hover:text-white border border-white/5'
-                      }`}
-                    >
-                      {pill.label}
-                    </button>
-                  ))}
-                </div>
+                <button
+                  onClick={handleResetFilters}
+                  className="text-xs text-[#D4A64A] hover:underline font-mono flex items-center gap-1 cursor-pointer"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Reset Filters</span>
+                </button>
               </div>
 
               {/* RESULTS LIST */}
