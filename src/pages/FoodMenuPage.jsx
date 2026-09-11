@@ -33,51 +33,51 @@ export default function FoodMenuPage({ onOpenBooking }) {
     {
       day: "MONDAY",
       tag: "Protein Kickoff",
-      breakfast: { name: customMenu?.MONDAY?.breakfast || "Puttu, Kadala Curry", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80", tag: "High Fiber" },
+      breakfast: { name: customMenu?.MONDAY?.breakfast || "Puttu & Kadala Curry", img: "https://images.unsplash.com/photo-1591940597372-bd266c6eb29e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UHV0dHUlMjAlMjYlMjBLYWRhbGElMjBDdXJyeXxlbnwwfHwwfHx8MA%3D%3D", tag: "High Fiber" },
       lunch: { name: customMenu?.MONDAY?.lunch || "Rice, Moru Curry, Uppari", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80", tag: "Probiotic Moru" },
-      dinner: { name: customMenu?.MONDAY?.dinner || "Dal Masala, Rice, Chappathi", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80", tag: "Light & Digestic" }
+      dinner: { name: customMenu?.MONDAY?.dinner || "Chappathi & Dal Masala", img: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hhcGF0aSUyMGFuZCUyMGRhbCUyMG1hc2FsYXxlbnwwfHwwfHx8MA%3D%3D", tag: "Light & Digestic" }
     },
     {
       day: "TUESDAY",
       tag: "Homestyle Delights",
-      breakfast: { name: customMenu?.TUESDAY?.breakfast || "White Sauce / Italian Pasta", img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281290?auto=format&fit=crop&w=600&q=80", tag: "Italian Fusion" },
-      lunch: { name: customMenu?.TUESDAY?.lunch || "Rice, Upperi, Coconut Curry", img: "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80", tag: "Fresh Coconut" },
-      dinner: { name: customMenu?.TUESDAY?.dinner || "Chappathi, Chicken Gravy, Rice", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80", tag: "Spicy Kerala Gravy" }
+      breakfast: { name: customMenu?.TUESDAY?.breakfast || "Idly & Sambar, Chutney", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80", tag: "Traditional Breakfast" },
+      lunch: { name: customMenu?.TUESDAY?.lunch || "Rice, Fish Curry / Veg Gravy", img: "https://media.istockphoto.com/id/2148568590/photo/bengali-non-veg-lunch-thali-with-plain-rice-vegetables-and-fish.webp?a=1&b=1&s=612x612&w=0&k=20&c=qgoRnnT5BuO-_X5Ppydvo76I8RgvvVfbvhyL0y0M0nQ=", tag: "Fresh Coastal Curry" },
+      dinner: { name: customMenu?.TUESDAY?.dinner || "Chappathi & Chicken Gravy", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80", tag: "Spicy Kerala Gravy" }
     },
     {
       day: "WEDNESDAY",
       tag: "Midweek Coastal Special",
-      breakfast: { name: customMenu?.WEDNESDAY?.breakfast || "Chappathi, Kadala Curry", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80", tag: "Whole Grain" },
-      lunch: { name: customMenu?.WEDNESDAY?.lunch || "Meen (Fish) Curry, Rice, Pappad", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80", tag: "Fresh Coastal Fish" },
-      dinner: { name: customMenu?.WEDNESDAY?.dinner || "Fragrant Veg Biryani & Raitha", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80", tag: "Basmati Spice" }
+      breakfast: { name: customMenu?.WEDNESDAY?.breakfast || "Dosa & Coconut Chutney", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80", tag: "Traditional South Indian" },
+      lunch: { name: customMenu?.WEDNESDAY?.lunch || "Kerala Rice, Sambar, Aviyal", img: "https://assets.vogue.in/photos/5f4cddb9e07cbbc0d15b6866/2:3/w_1920,c_limit/Onam-2020.jpg", tag: "Traditional Sadhya" },
+      dinner: { name: customMenu?.WEDNESDAY?.dinner || "Veg / Chicken Biryani", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80", tag: "Basmati Spice" }
     },
     {
       day: "THURSDAY",
       tag: "Tradition & Spice",
-      breakfast: { name: customMenu?.THURSDAY?.breakfast || "Poori, Potato Baji", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80", tag: "Crispy Golden" },
-      lunch: { name: customMenu?.THURSDAY?.lunch || "Rice, Sambar, Avial", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80", tag: "Traditional Avial" },
-      dinner: { name: customMenu?.THURSDAY?.dinner || "Ghee Rice, Liver Curry / Veg", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80", tag: "Pure Cow Ghee" }
+      breakfast: { name: customMenu?.THURSDAY?.breakfast || "Poori Baji", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80", tag: "Crispy Golden" },
+      lunch: { name: customMenu?.THURSDAY?.lunch || "Rice, Pulissery, Thoran", img: "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80", tag: "Traditional Avial" },
+      dinner: { name: customMenu?.THURSDAY?.dinner || "Ghee Rice & Liver Curry / Veg", img: "https://images.unsplash.com/photo-1710091691802-7dedb8af9a77?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8R2hlZSUyMFJpY2UlMjAlMjYlMjBMaXZlciUyMEN1cnJ5JTIwJTJGJTIwVmVnfGVufDB8fDB8fHww", tag: "Pure Cow Ghee" }
     },
     {
       day: "FRIDAY",
       tag: "Weekend Countdown",
-      breakfast: { name: customMenu?.FRIDAY?.breakfast || "Soft Idly, Sambar, Coconut Chutney", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80", tag: "Steamed Soft" },
-      lunch: { name: customMenu?.FRIDAY?.lunch || "Rice, Crispy Pappad, Sambar", img: "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80", tag: "Homestyle Meal" },
-      dinner: { name: customMenu?.FRIDAY?.dinner || "Chappathi, Dal Curry, Rice", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80", tag: "High Protein Dal" }
+      breakfast: { name: customMenu?.FRIDAY?.breakfast || "Appam & Veg Stew", img: "https://images.unsplash.com/photo-1738986586839-93af00b40dd8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXBwYW0lMjBhbmQlMjB2ZWclMjBzdGV3fGVufDB8fDB8fHww", tag: "Steamed Soft" },
+      lunch: { name: customMenu?.FRIDAY?.lunch || "Rice, Fish Fry, Rasam", img: "https://images.unsplash.com/photo-1756741987051-a6a38f28838b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmljZSUyMGZpc2glMjBmcnklMjByYXNhbXxlbnwwfHwwfHx8MA%3D%3D", tag: "Homestyle Meal" },
+      dinner: { name: customMenu?.FRIDAY?.dinner || "Chappathi & Dal Curry", img: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hhcGF0aSUyMGFuZCUyMGRhbCUyMG1hc2FsYXxlbnwwfHwwfHx8MA%3D%3D", tag: "High Protein Dal" }
     },
     {
       day: "SATURDAY",
       tag: "Weekend Feast",
-      breakfast: { name: customMenu?.SATURDAY?.breakfast || "Crispy Dosa, Coconut Chutney", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80", tag: "Fermented Batter" },
-      lunch: { name: customMenu?.SATURDAY?.lunch || "Egg Fried Rice, Onion Raitha", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80", tag: "Wok Tossed" },
-      dinner: { name: customMenu?.SATURDAY?.dinner || "Arabian Majboos / Kerala Roast", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80", tag: "Chef Special" }
+      breakfast: { name: customMenu?.SATURDAY?.breakfast || "Idiyappam & Egg Curry", img: "https://media.istockphoto.com/id/665702302/photo/kerala-breakfast-idiyappam-or-appam.webp?a=1&b=1&s=612x612&w=0&k=20&c=42qmfT132_9KZ2iMoyxmoI-8VN9jHCFM8oR0V_AczGQ=", tag: "Fermented Batter" },
+      lunch: { name: customMenu?.SATURDAY?.lunch || "Egg Fried Rice & Raitha", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80", tag: "Wok Tossed" },
+      dinner: { name: customMenu?.SATURDAY?.dinner || "Malabar Parotta & Chicken", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80", tag: "Chef Special" }
     },
     {
       day: "SUNDAY",
       tag: "Malabar Biryani Day",
-      breakfast: { name: customMenu?.SUNDAY?.breakfast || "Uppumavu & Fresh Banana", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80", tag: "Roasted Rava" },
-      lunch: { name: customMenu?.SUNDAY?.lunch || "Sunday Malabar Chicken Biryani", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80", tag: "⭐ Sunday Royal Feast" },
-      dinner: { name: customMenu?.SUNDAY?.dinner || "Kanji, Cherupayar, Pappad", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80", tag: "Comforting Rice Kanji" }
+      breakfast: { name: customMenu?.SUNDAY?.breakfast || "Uppumavu & Banana", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80", tag: "Roasted Rava" },
+      lunch: { name: customMenu?.SUNDAY?.lunch || "Special Sunday Chicken Biryani", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80", tag: "⭐ Sunday Royal Feast" },
+      dinner: { name: customMenu?.SUNDAY?.dinner || "Kanji, Cherupayar & Pappad", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80", tag: "Comforting Rice Kanji" }
     },
   ];
 

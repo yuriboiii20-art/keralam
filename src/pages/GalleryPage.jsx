@@ -63,7 +63,7 @@ export default function GalleryPage() {
       id: 8,
       title: 'Kerala Mess Special Sadhya',
       category: 'dining',
-      image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1200&q=80',
+      image: 'https://assets.vogue.in/photos/5f4cddb9e07cbbc0d15b6866/2:3/w_1920,c_limit/Onam-2020.jpg',
       caption: 'Homestyle Kerala Sadhya red rice feast served to residents.'
     },
     {
