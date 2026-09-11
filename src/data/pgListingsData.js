@@ -528,3 +528,57 @@ export const citiesList = [
   "Pune",
   "Mumbai"
 ];
+
+export const getEnrichedListings = () => {
+  return pgListings.map(item => {
+    const is1BHK = item.name.toLowerCase().includes('1bhk') || item.name.toLowerCase().includes('1 bhk') || (item.desc || '').toLowerCase().includes('1bhk');
+    const is2BHK = item.name.toLowerCase().includes('2bhk') || item.name.toLowerCase().includes('2 bhk') || (item.desc || '').toLowerCase().includes('2bhk');
+    
+    let roomType = 'shared';
+    let roomTypeLabel = 'Shared Room';
+    if (is1BHK) {
+      roomType = '1bhk';
+      roomTypeLabel = '1 BHK';
+    } else if (is2BHK) {
+      roomType = '2bhk';
+      roomTypeLabel = '2 BHK';
+    } else if (item.sharing === 1) {
+      roomType = 'single';
+      roomTypeLabel = 'Single Room';
+    }
+
+    const dayRate = item.sharing === 1 ? 799 : (item.sharing === 2 ? 499 : (item.sharing === 3 ? 399 : 349));
+    const weekRate = item.sharing === 1 ? 3499 : (item.sharing === 2 ? 2199 : (item.sharing === 3 ? 1799 : 1499));
+    const monthRate = item.price || 7499;
+
+    return {
+      ...item,
+      roomType,
+      roomTypeLabel,
+      stayRates: {
+        day: dayRate,
+        dayDisplay: `₹${dayRate.toLocaleString('en-IN')}`,
+        week: weekRate,
+        weekDisplay: `₹${weekRate.toLocaleString('en-IN')}`,
+        month: monthRate,
+        monthDisplay: `₹${monthRate.toLocaleString('en-IN')}`,
+      },
+      stayBenefits: {
+        day: 'Free hot Kerala breakfast • Zero deposit',
+        week: 'Homestyle breakfast & dinner • Flexible lease',
+        month: '3x Kerala meals daily + evening chai • Full access',
+      },
+      amenitiesSummary: [
+        '3x Daily Kerala Meals',
+        '1 Gbps Dual Fiber Wi-Fi',
+        '100% Commercial Generator',
+        'Attached Western Washroom',
+        'Orthopedic Bed + Study Desk',
+        'Biometric CCTV Security'
+      ],
+      availabilityStatus: 'Move-in Ready',
+    };
+  });
+};
+
+export const allEnrichedListings = getEnrichedListings();
