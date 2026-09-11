@@ -565,10 +565,10 @@ export default function Home({ onOpenBooking }) {
       <div className="relative z-10 overflow-hidden">
 
         {/* HERO SECTION WITH IMMEDIATE "FIND YOUR SPACE" BOOKING & FILTER INTERFACE */}
-        <section className="relative pt-24 sm:pt-28 pb-8 px-4 sm:px-8 max-w-7xl mx-auto space-y-6">
+        <section className="relative pt-24 sm:pt-28 pb-8 px-4 sm:px-8 max-w-7xl mx-auto space-y-8">
 
           {/* Hero Branding Header + 3D Canvas Row */}
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pb-2">
             
             {/* Left Column: Brand Headline & Value Proposition */}
             <motion.div
@@ -613,7 +613,7 @@ export default function Home({ onOpenBooking }) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="lg:w-5/12 w-full hidden md:block max-h-[300px]"
+              className="lg:w-5/12 w-full hidden md:flex items-center justify-end"
             >
               <Hero3DCanvas />
             </motion.div>
@@ -621,7 +621,7 @@ export default function Home({ onOpenBooking }) {
           </div>
 
           {/* STEP 1: PROMINENT "FIND YOUR SPACE" BOOKING & FILTER PANEL */}
-          <div id="find-your-space-panel" className="scroll-mt-24">
+          <div id="find-your-space-panel" className="scroll-mt-28 relative z-20">
             <FindYourSpacePanel
               initialFilters={bookingFilters}
               onSearch={handleSearchRooms}
