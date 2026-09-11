@@ -1,8 +1,8 @@
 import useScrollLock from '../hooks/useScrollLock';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, User, Phone, Mail, Home, CheckCircle2, Sparkles, Send, MessageSquare, Bell, Share2, Copy, Check, ShieldCheck, Utensils } from 'lucide-react';
+import { X, Calendar, User, Phone, Mail, Home, CheckCircle2, Sparkles, Send, MessageSquare, Bell, Share2, Copy, Check, ShieldCheck, Utensils, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
@@ -13,18 +13,60 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
   const [copied, setCopied] = useState(false);
   const [notificationSent, setNotificationSent] = useState(false);
 
+  const [roomDropdownOpen, setRoomDropdownOpen] = useState(false);
+  const [dietDropdownOpen, setDietDropdownOpen] = useState(false);
+  const roomDropdownRef = useRef(null);
+  const dietDropdownRef = useRef(null);
+
+  const roomOptions = [
+    { value: 'Daily Stay Special (₹499/day)', label: '⭐ Daily Stay Special — ₹499/day (Breakfast Free)' },
+    { value: '2 BHK Sharing Room (₹7,499/mo)', label: '🛏️ 2 BHK Sharing Room — ₹7,499/mo (3x Meals Included)' },
+    { value: 'Single Private Room (₹11,499/mo)', label: '🚪 Single Private Room — ₹11,499/mo (3x Meals Included)' },
+    { value: '1 BHK Private Suite (Monthly)', label: '🏢 1 BHK Private Suite — Contact for Rate' },
+  ];
+
+  const dietOptions = [
+    { value: 'Non-Veg', label: '🍗 Non-Veg' },
+    { value: 'Pure Vegetarian', label: '🥗 Pure Vegetarian' },
+    { value: 'Eggetarian', label: '🍳 Eggetarian' },
+  ];
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      roomType: initialRoomTitle || '2 BHK Sharing Room',
+      roomType: initialRoomTitle || 'Daily Stay Special (₹499/day)',
       tourType: 'in-person',
-      dietPreference: 'kerala-mix',
+      dietPreference: 'Non-Veg',
     },
   });
+
+  const currentRoom = watch('roomType') || initialRoomTitle || 'Daily Stay Special (₹499/day)';
+  const currentDiet = watch('dietPreference') || 'Non-Veg';
+
+  useEffect(() => {
+    if (initialRoomTitle) {
+      setValue('roomType', initialRoomTitle);
+    }
+  }, [initialRoomTitle, setValue]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (roomDropdownRef.current && !roomDropdownRef.current.contains(e.target)) {
+        setRoomDropdownOpen(false);
+      }
+      if (dietDropdownRef.current && !dietDropdownRef.current.contains(e.target)) {
+        setDietDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const triggerPhoneNotification = async (data, refCode) => {
     // 1. Browser Native Push Notification (if permitted or requested)
@@ -236,22 +278,69 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
                 </div>
 
                 {/* Room Preference */}
-                <div>
+                <div className="relative" ref={roomDropdownRef}>
                   <label className="block text-xs font-bold uppercase tracking-wider mb-1 text-[#FAF7F0]/80 font-mono">
                     Select Room Plan
                   </label>
-                  <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRoomDropdownOpen(!roomDropdownOpen);
+                      setDietDropdownOpen(false);
+                    }}
+                    className="w-full pl-10 pr-4 py-3 rounded-xl glass-card text-xs sm:text-sm focus:outline-none focus:border-[#D4A64A] transition-all flex items-center justify-between text-left border border-white/10 hover:border-[#D4A64A]/40 bg-[#0B1220]/60 relative"
+                    aria-haspopup="listbox"
+                    aria-expanded={roomDropdownOpen}
+                  >
                     <Home className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D4A64A]" />
-                    <select
-                      {...register('roomType')}
-                      className="w-full pl-10 pr-4 py-3 rounded-xl glass-card text-xs sm:text-sm focus:outline-none focus:border-[#D4A64A] transition-colors bg-[#0B1220]"
-                    >
-                      <option value="Daily Stay Special (₹499/day)">⭐ Daily Stay Special — ₹499/day (Breakfast Free)</option>
-                      <option value="2 BHK Sharing Room (₹7,499/mo)">2 BHK Sharing Room — ₹7,499/mo (3x Meals Included)</option>
-                      <option value="Single Private Room (₹11,499/mo)">Single Private Room — ₹11,499/mo (3x Meals Included)</option>
-                      <option value="1 BHK Private Suite (Monthly)">1 BHK Private Suite — Contact for Rate</option>
-                    </select>
-                  </div>
+                    <span className="truncate text-[#FAF7F0]">
+                      {roomOptions.find((o) => o.value === currentRoom)?.label || currentRoom}
+                    </span>
+                    <ChevronDown
+                      className={`w-4 h-4 text-[#D4A64A] transition-transform duration-200 shrink-0 ${
+                        roomDropdownOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {roomDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute top-full mt-1.5 left-0 right-0 z-50 rounded-2xl border border-[#D4A64A]/40 shadow-2xl overflow-hidden backdrop-blur-2xl"
+                        style={{
+                          backdropFilter: 'blur(24px)',
+                          WebkitBackdropFilter: 'blur(24px)',
+                          backgroundColor: 'rgba(11, 18, 32, 0.92)',
+                        }}
+                      >
+                        <div className="p-1.5 space-y-1 max-h-60 overflow-y-auto">
+                          {roomOptions.map((opt) => (
+                            <button
+                              key={opt.value}
+                              type="button"
+                              onClick={() => {
+                                setValue('roomType', opt.value, { shouldValidate: true });
+                                setRoomDropdownOpen(false);
+                              }}
+                              className={`w-full px-3 py-2.5 rounded-xl text-xs sm:text-sm text-left transition-all flex items-center justify-between ${
+                                currentRoom === opt.value
+                                  ? 'bg-[#D4A64A]/20 text-[#D4A64A] font-bold border border-[#D4A64A]/30'
+                                  : 'text-[#FAF7F0] hover:bg-white/10 hover:text-[#FAF7F0]'
+                              }`}
+                            >
+                              <span className="truncate pr-2">{opt.label}</span>
+                              {currentRoom === opt.value && <Check className="w-3.5 h-3.5 text-[#D4A64A] shrink-0" />}
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  <input type="hidden" {...register('roomType')} />
                 </div>
 
                 {/* Date & Tour */}
@@ -267,18 +356,68 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
                     />
                   </div>
 
-                  <div>
+                  <div className="relative" ref={dietDropdownRef}>
                     <label className="block text-xs font-bold uppercase tracking-wider mb-1 text-[#FAF7F0]/80 font-mono">
                       Food Preference
                     </label>
-                    <select
-                      {...register('dietPreference')}
-                      className="w-full px-3.5 py-3 rounded-xl glass-card text-xs sm:text-sm focus:outline-none focus:border-[#D4A64A] transition-colors bg-[#0B1220]"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDietDropdownOpen(!dietDropdownOpen);
+                        setRoomDropdownOpen(false);
+                      }}
+                      className="w-full px-3.5 py-3 rounded-xl glass-card text-xs sm:text-sm focus:outline-none focus:border-[#D4A64A] transition-all flex items-center justify-between text-left border border-white/10 hover:border-[#D4A64A]/40 bg-[#0B1220]/60"
+                      aria-haspopup="listbox"
+                      aria-expanded={dietDropdownOpen}
                     >
-                      <option value="Kerala Non-Veg & Veg">Kerala Non-Veg & Veg</option>
-                      <option value="Pure Vegetarian">Pure Vegetarian</option>
-                      <option value="Eggetarian">Eggetarian</option>
-                    </select>
+                      <span className="truncate text-[#FAF7F0]">
+                        {dietOptions.find((o) => o.value === currentDiet)?.label || currentDiet}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-[#D4A64A] transition-transform duration-200 shrink-0 ${
+                          dietDropdownOpen ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {dietDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute bottom-full mb-2 left-0 right-0 z-50 rounded-2xl border border-[#D4A64A]/40 shadow-2xl overflow-hidden backdrop-blur-2xl"
+                          style={{
+                            backdropFilter: 'blur(24px)',
+                            WebkitBackdropFilter: 'blur(24px)',
+                            backgroundColor: 'rgba(11, 18, 32, 0.92)',
+                          }}
+                        >
+                          <div className="p-1.5 space-y-1">
+                            {dietOptions.map((opt) => (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => {
+                                  setValue('dietPreference', opt.value, { shouldValidate: true });
+                                  setDietDropdownOpen(false);
+                                }}
+                                className={`w-full px-3 py-2.5 rounded-xl text-xs sm:text-sm text-left transition-all flex items-center justify-between ${
+                                  currentDiet === opt.value
+                                    ? 'bg-[#D4A64A]/20 text-[#D4A64A] font-bold border border-[#D4A64A]/30'
+                                    : 'text-[#FAF7F0] hover:bg-white/10 hover:text-[#FAF7F0]'
+                                }`}
+                              >
+                                <span>{opt.label}</span>
+                                {currentDiet === opt.value && <Check className="w-3.5 h-3.5 text-[#D4A64A]" />}
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    <input type="hidden" {...register('dietPreference')} />
                   </div>
                 </div>
 
