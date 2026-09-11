@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -34,6 +35,17 @@ export default function StayPlanModal({
 }) {
   useScrollLock(isOpen);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   // Active step inside this modal: 3 (Choose Stay Plan) or 4 (Confirm Booking)
   const [step, setStep] = useState(3);
 
@@ -68,6 +80,7 @@ export default function StayPlanModal({
   }, [isOpen, room, initialStayType, initialCheckInDate, initialDurationValue]);
 
   if (!isOpen || !room) return null;
+  if (typeof document === 'undefined') return null;
 
   // Rates calculation
   const dayRate = room.stayRates?.day || 499;
@@ -165,44 +178,84 @@ Please confirm my room check-in availability at Jigani near HCL Gate. Thank you!
     return encodeURIComponent(text);
   };
 
-  return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-[450] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-[#0B1220]/90 backdrop-blur-md"
-        />
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] overflow-y-auto bg-[#0B1220]/90 backdrop-blur-md">
+      {/* Floating High-Contrast Close Button - Always visible on screen */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close modal"
+        className="fixed top-4 right-4 z-[100000] px-4 py-2 rounded-2xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-[0_10px_25px_rgba(239,68,68,0.5)] border-2 border-white/30 transition-all cursor-pointer"
+      >
+        <X className="w-4 h-4 stroke-[3]" />
+        <span>Close (Esc)</span>
+      </button>
 
+      {/* Backdrop click dismisser */}
+      <div className="fixed inset-0" onClick={onClose} />
+
+      {/* Flex container that prevents top clipping */}
+      <div className="min-h-full flex items-start sm:items-center justify-center p-2 sm:p-4 pt-16 sm:pt-6 pb-8 relative pointer-events-none">
         {/* Modal Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-2xl rounded-3xl bg-[#0B1220] border border-[#D4A64A]/40 text-[#FAF7F0] shadow-[0_25px_80px_rgba(0,0,0,0.95)] z-10 overflow-hidden flex flex-col max-h-[92vh]"
+          exit={{ opacity: 0, scale: 0.95, y: 15 }}
+          className="relative w-full max-w-2xl rounded-3xl bg-[#0B1220] border-2 border-[#D4A64A]/50 text-[#FAF7F0] shadow-[0_25px_80px_rgba(0,0,0,0.98)] z-10 overflow-hidden flex flex-col max-h-[calc(100vh-5rem)] sm:max-h-[88vh] my-auto pointer-events-auto"
         >
-          {/* Top Progress Indicator Header */}
-          <div className="p-3 sm:p-4 border-b border-white/10 bg-[#0E172A] relative">
-            <button
-              onClick={onClose}
-              className="absolute right-4 top-4 w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white flex items-center justify-center border border-white/10 transition-colors cursor-pointer z-20"
-            >
-              <X className="w-4 h-4" />
-            </button>
+          {/* Top Sticky Header with Prominent Back and High-Contrast Close X */}
+          <div className="sticky top-0 z-30 p-3 sm:p-4 border-b border-white/10 bg-[#0E172A] shrink-0 space-y-3 shadow-md">
+            <div className="flex items-center justify-between gap-3">
+              {/* Back to Rooms button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (step === 4 && !isConfirmed) {
+                    setStep(3);
+                  } else {
+                    onClose();
+                  }
+                }}
+                className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-[#FAF7F0] text-xs font-bold flex items-center gap-1.5 border border-white/20 transition-all cursor-pointer shadow-sm hover:border-[#D4A64A]/50 group"
+              >
+                <ArrowLeft className="w-4 h-4 text-[#D4A64A] group-hover:-translate-x-0.5 transition-transform" />
+                <span>{step === 4 && !isConfirmed ? '← Back to Stay Plans' : '← Back to Rooms'}</span>
+              </button>
+
+              <div className="hidden sm:flex items-center gap-2 text-xs text-[#FAF7F0]/70 font-mono">
+                <span className="px-2 py-0.5 rounded-md bg-[#D4A64A]/15 text-[#D4A64A] font-bold border border-[#D4A64A]/30">
+                  Step {step === 4 ? '4' : '3'} of 4
+                </span>
+              </div>
+
+              {/* In-Card Close X button */}
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close modal"
+                className="px-3 py-1.5 rounded-xl bg-red-500/20 hover:bg-red-500 text-red-200 hover:text-white text-xs font-bold flex items-center gap-1.5 border border-red-500/40 transition-all cursor-pointer shadow-sm active:scale-95"
+              >
+                <X className="w-4 h-4 stroke-[2.5]" />
+                <span>Close</span>
+              </button>
+            </div>
 
             <BookingProgressSteps
               currentStep={isConfirmed ? 4 : step}
               onStepClick={(targetStep) => {
-                if (!isConfirmed && targetStep === 3) setStep(3);
+                if (!isConfirmed) {
+                  if (targetStep === 1 || targetStep === 2) {
+                    onClose();
+                  } else if (targetStep === 3) {
+                    setStep(3);
+                  }
+                }
               }}
             />
           </div>
 
           {/* Body Content */}
-          <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
+          <div className="p-4 sm:p-6 overflow-y-auto space-y-6">
             
             {/* SUCCESS CONFIRMATION STATE */}
             {isConfirmed ? (
@@ -487,15 +540,26 @@ Please confirm my room check-in availability at Jigani near HCL Gate. Thank you!
                   </span>
                 </div>
 
-                {/* Continue CTA */}
-                <button
-                  type="button"
-                  onClick={handleContinueToStep4}
-                  className="w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-[#D4A64A]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer btn-shimmer"
-                >
-                  <span>Continue to Guest Details</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+                {/* Step 3 Action Bar: Back and Continue */}
+                <div className="flex items-center gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="py-3.5 px-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs text-white/90 font-bold transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                  >
+                    <ArrowLeft className="w-4 h-4 text-[#D4A64A]" />
+                    <span>Back to Rooms</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleContinueToStep4}
+                    className="flex-1 py-3.5 sm:py-4 px-6 rounded-2xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl shadow-[#D4A64A]/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer btn-shimmer"
+                  >
+                    <span>Continue to Guest Details</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             ) : (
               /* STEP 4 — CONFIRM BOOKING */
@@ -613,10 +677,18 @@ Please confirm my room check-in availability at Jigani near HCL Gate. Thank you!
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-white/80 font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                    className="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-xs text-white/90 font-bold transition-all flex items-center gap-1.5 cursor-pointer hover:border-[#D4A64A]/40"
                   >
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                    <span>Back</span>
+                    <ArrowLeft className="w-3.5 h-3.5 text-[#D4A64A]" />
+                    <span>Back to Stay Plans</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="py-3 px-3 rounded-xl bg-white/5 hover:bg-red-500/20 active:scale-95 border border-white/10 hover:border-red-500/30 text-xs text-white/60 hover:text-red-200 transition-all cursor-pointer"
+                  >
+                    Cancel
                   </button>
 
                   <button
@@ -633,6 +705,7 @@ Please confirm my room check-in availability at Jigani near HCL Gate. Thank you!
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </div>,
+    document.body
   );
 }

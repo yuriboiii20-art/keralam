@@ -1,5 +1,6 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { motion } from 'framer-motion';
 import {
   X,
   Star,
@@ -13,6 +14,7 @@ import {
   Calendar,
   Phone,
   ArrowRight,
+  ArrowLeft,
 } from 'lucide-react';
 import useScrollLock from '../../hooks/useScrollLock';
 
@@ -25,29 +27,57 @@ export default function RoomDetailsModal({
 }) {
   useScrollLock(isOpen);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen || !room) return null;
+  if (typeof document === 'undefined') return null;
 
-  return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-[400] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-[#0B1220]/90 backdrop-blur-md"
-        />
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] overflow-y-auto bg-[#0B1220]/90 backdrop-blur-md">
+      {/* Floating High-Contrast Close Button */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close modal"
+        className="fixed top-4 right-4 z-[100000] px-4 py-2 rounded-2xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-[0_10px_25px_rgba(239,68,68,0.5)] border-2 border-white/30 transition-all cursor-pointer"
+      >
+        <X className="w-4 h-4 stroke-[3]" />
+        <span>Close (Esc)</span>
+      </button>
 
+      {/* Backdrop click dismisser */}
+      <div className="fixed inset-0" onClick={onClose} />
+
+      {/* Flex container that prevents top clipping */}
+      <div className="min-h-full flex items-start sm:items-center justify-center p-2 sm:p-4 pt-16 sm:pt-6 pb-8 relative pointer-events-none">
         {/* Modal Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-3xl rounded-3xl bg-[#0B1220] border border-[#D4A64A]/40 text-[#FAF7F0] shadow-[0_25px_80px_rgba(0,0,0,0.9)] z-10 overflow-hidden flex flex-col max-h-[90vh]"
+          exit={{ opacity: 0, scale: 0.95, y: 15 }}
+          className="relative w-full max-w-3xl rounded-3xl bg-[#0B1220] border-2 border-[#D4A64A]/50 text-[#FAF7F0] shadow-[0_25px_80px_rgba(0,0,0,0.98)] z-10 overflow-hidden flex flex-col max-h-[calc(100vh-5rem)] sm:max-h-[88vh] my-auto pointer-events-auto"
         >
           {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-[#0E172A]">
+          <div className="sticky top-0 z-30 p-3 sm:p-4 border-b border-white/10 flex items-center justify-between bg-[#0E172A] shadow-md">
+            {/* Back Button */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-[#FAF7F0] text-xs font-bold flex items-center gap-1.5 border border-white/20 transition-all cursor-pointer shadow-sm hover:border-[#D4A64A]/50 group"
+            >
+              <ArrowLeft className="w-4 h-4 text-[#D4A64A] group-hover:-translate-x-0.5 transition-transform" />
+              <span>← Back to Rooms</span>
+            </button>
+
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-lg bg-[#D4A64A]/15 text-[#D4A64A] text-xs font-mono font-bold border border-[#D4A64A]/30">
                 {room.genderLabel}
@@ -58,10 +88,13 @@ export default function RoomDetailsModal({
             </div>
 
             <button
+              type="button"
               onClick={onClose}
-              className="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white flex items-center justify-center border border-white/10 transition-colors cursor-pointer"
+              aria-label="Close modal"
+              className="px-3 py-1.5 rounded-xl bg-red-500/20 hover:bg-red-500 text-red-200 hover:text-white text-xs font-bold flex items-center gap-1.5 border border-red-500/40 transition-all cursor-pointer shadow-sm active:scale-95"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4 stroke-[2.5]" />
+              <span>Close</span>
             </button>
           </div>
 
@@ -153,9 +186,10 @@ export default function RoomDetailsModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-white/80 transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-xs font-bold text-white/90 transition-all cursor-pointer flex items-center gap-1.5 border border-white/15 hover:border-[#D4A64A]/40"
             >
-              Back to Listings
+              <ArrowLeft className="w-3.5 h-3.5 text-[#D4A64A]" />
+              <span>Back to Rooms</span>
             </button>
 
             <button
@@ -164,7 +198,7 @@ export default function RoomDetailsModal({
                 onClose();
                 if (onProceedToBooking) onProceedToBooking(room);
               }}
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] text-xs sm:text-sm font-extrabold shadow-lg shadow-[#D4A64A]/25 hover:scale-105 transition-all flex items-center gap-2 cursor-pointer btn-shimmer"
+              className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] text-xs sm:text-sm font-extrabold shadow-lg shadow-[#D4A64A]/25 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer btn-shimmer"
             >
               <span>Choose Stay Plan & Book</span>
               <ArrowRight className="w-4 h-4" />
@@ -172,6 +206,7 @@ export default function RoomDetailsModal({
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </div>,
+    document.body
   );
 }
