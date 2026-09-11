@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, Send, X, Sparkles, Phone, MessageSquare, RefreshCw, Calendar } from 'lucide-react';
+import { Bot, Send, X, Phone, MessageSquare, RefreshCw, Calendar } from 'lucide-react';
+import FindSpaceLogo from './FindSpaceLogo';
 
 export default function AIChatbot({ onOpenBooking }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,7 +114,7 @@ export default function AIChatbot({ onOpenBooking }) {
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold font-sora text-[#FAF7F0] flex items-center gap-1.5">
                     <span>Aafa Front-Desk Concierge</span>
-                    <Sparkles className="w-3 h-3 text-[#D4A64A]" />
+                    <FindSpaceLogo className="w-3.5 h-3.5" />
                   </h4>
                   <p className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
