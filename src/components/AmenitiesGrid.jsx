@@ -81,24 +81,24 @@ export default function AmenitiesGrid() {
     : amenities.filter((a) => a.category === activeCategory);
 
   return (
-    <section id="amenities" className="relative py-20 px-4 sm:px-8 max-w-7xl mx-auto z-10">
+    <section id="amenities" className="relative py-10 sm:py-20 px-3.5 sm:px-8 max-w-7xl mx-auto z-10">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
+      <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-4">
           <Sparkles className="w-4 h-4 text-[#D4A64A]" />
           <span>Zero-Gravity Amenities</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-4 font-sora tracking-tight">
+        <h2 className="text-2xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-3 sm:mb-4 font-sora tracking-tight">
           Designed for <span className="text-gradient-gold">Uncompromised Living</span>
         </h2>
-        <p className="text-[#FAF7F0]/80 text-sm sm:text-base leading-relaxed">
+        <p className="text-[#FAF7F0]/80 text-xs sm:text-base leading-relaxed">
           Every amenity at Aafa Coliving is built around convenience, comfort, and peace of mind so you can focus on your career and life.
         </p>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex justify-center gap-2.5 mb-10 overflow-x-auto pb-2">
+      <div className="flex justify-start sm:justify-center gap-2 sm:gap-2.5 mb-8 sm:mb-10 overflow-x-auto pb-2 no-scrollbar max-w-full">
         {categories.map((cat) => (
           <button
             key={cat.id}

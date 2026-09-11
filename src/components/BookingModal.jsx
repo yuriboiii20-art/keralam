@@ -189,7 +189,7 @@ export default function BookingModal({ isOpen, onClose, initialRoomTitle }) {
           initial={{ opacity: 0, scale: 0.92, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
-          className="relative w-full max-w-lg rounded-3xl glass-card border border-[#D4A64A]/45 p-5 sm:p-8 shadow-2xl z-10 my-6 overflow-hidden bg-[#0B1220]/95"
+          className="relative w-full max-w-lg rounded-3xl glass-card border border-[#D4A64A]/45 p-4 sm:p-8 shadow-2xl z-10 my-auto overflow-y-auto max-h-[92vh] bg-[#0B1220]/95"
         >
           {/* Close button */}
           <button

@@ -108,22 +108,22 @@ export default function MatchingRoomsSection({
   return (
     <div id="matching-rooms-results" className="w-full space-y-6 pt-4">
       {/* Top Compact Summary Bar with "Edit Filters" button */}
-      <div className="rounded-2xl glass-card border border-white/10 p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg bg-[#0B1220]/80">
+      <div className="rounded-2xl glass-card border border-white/10 p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg bg-[#0B1220]/80">
         
         {/* Summary text */}
-        <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#FAF7F0] truncate">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm font-mono text-[#FAF7F0]">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-          <span className="font-bold text-[#D4A64A] text-sm sm:text-base">
+          <span className="font-bold text-[#D4A64A] text-sm sm:text-base whitespace-nowrap">
             {matchingListings.length} {matchingListings.length === 1 ? 'Space Available' : 'Spaces Available'}
           </span>
-          <span className="text-white/40 hidden md:inline">•</span>
-          <span className="truncate">
+          <span className="text-white/40 hidden sm:inline">•</span>
+          <span className="text-xs sm:text-sm text-[#FAF7F0]/85">
             Rooms in <strong className="text-[#FAF7F0]">{locationLabel}</strong> • {sharingLabel} • <strong className="text-emerald-400">{stayTypeLabel}</strong>
           </span>
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
           <button
             type="button"
             onClick={onEditFilters}

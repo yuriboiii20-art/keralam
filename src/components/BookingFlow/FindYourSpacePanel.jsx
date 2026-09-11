@@ -94,7 +94,7 @@ export default function FindYourSpacePanel({
         </div>
 
         {/* Stay Type Segmented Switcher (Day Stay | Weekly | Monthly) */}
-        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#10192B] border border-white/10 self-start md:self-auto">
+        <div className="flex w-full md:w-auto items-center justify-between sm:justify-start gap-1 p-1 rounded-2xl bg-[#10192B] border border-white/10 overflow-x-auto no-scrollbar">
           {[
             { id: 'day', label: 'Day Stay', badge: '₹499/d' },
             { id: 'week', label: 'Weekly Stay', badge: 'Flexi' },
@@ -106,7 +106,7 @@ export default function FindYourSpacePanel({
                 key={tab.id}
                 type="button"
                 onClick={() => setStayType(tab.id)}
-                className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer relative ${
+                className={`flex-1 sm:flex-initial px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer whitespace-nowrap relative ${
                   isActive
                     ? 'bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] shadow-md shadow-[#D4A64A]/25'
                     : 'text-white/60 hover:text-white hover:bg-white/5'
@@ -228,14 +228,14 @@ export default function FindYourSpacePanel({
                   : 'Move-In & Months'}
               </span>
             </label>
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-1.5">
               {/* Date Input */}
               <input
                 type="date"
                 value={checkInDate}
                 min={todayStr}
                 onChange={(e) => setCheckInDate(e.target.value)}
-                className="w-full px-2 py-2 rounded-xl bg-[#10192B] border border-white/15 text-[11px] font-semibold text-[#FAF7F0] focus:border-[#D4A64A] outline-none cursor-pointer"
+                className="w-full px-2 py-2 rounded-xl bg-[#10192B] border border-white/15 text-[11px] font-semibold text-[#FAF7F0] focus:border-[#D4A64A] outline-none cursor-pointer min-w-0"
               />
 
               {/* Dynamic Duration Select based on Stay Type */}
@@ -290,16 +290,16 @@ export default function FindYourSpacePanel({
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
           
           {/* Quick Perks Pill */}
-          <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-white/70">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] font-mono text-white/70">
             <span className="flex items-center gap-1 text-emerald-400">
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-3.5 h-3.5 shrink-0" />
               <span>3x Kerala Meals Included</span>
             </span>
             <span className="flex items-center gap-1 text-emerald-400">
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-3.5 h-3.5 shrink-0" />
               <span>100% Commercial Gen Backup</span>
             </span>
-            <span className="hidden lg:inline text-white/40">• 1-Month Deposit Only</span>
+            <span className="text-white/40">• 1-Month Deposit Only</span>
           </div>
 
           {/* LARGE PRIMARY CTA: "Find Available Rooms →" */}

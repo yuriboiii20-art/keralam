@@ -98,7 +98,7 @@ export default function PriceCalculator({ onOpenBooking }) {
           </div>
 
           {/* Included Features Checklist */}
-          <div className="grid grid-cols-2 gap-2 text-xs text-[#FAF7F0]/85 pt-3 border-t border-[#FAF7F0]/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#FAF7F0]/85 pt-3 border-t border-[#FAF7F0]/10">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>3x Daily Kerala Meals Included</span>

@@ -216,3 +216,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 110px; scrollbar-gutter: sta
 /* Auto margins center short dialogs and leave tall dialogs reachable. */
 .fixed.inset-0.overflow-y-auto { align-items: flex-start; }
 .fixed.inset-0.overflow-y-auto > .relative { margin-block: auto; }
+
+/* Hide scrollbar for clean horizontal tab navigation */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

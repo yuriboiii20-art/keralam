@@ -40,10 +40,10 @@ export default function DiningMarquee() {
   ];
 
   return (
-    <section id="dining" className="relative py-20 z-10 overflow-hidden">
+    <section id="dining" className="relative py-10 sm:py-20 z-10 overflow-hidden">
       
       {/* Infinite Marquee Banner */}
-      <div className="w-full bg-gradient-to-r from-[#D4A64A] via-amber-400 to-yellow-600 py-3 text-[#0B1220] font-extrabold text-xs sm:text-sm tracking-wide overflow-hidden shadow-xl mb-14 rotate-[-0.8deg]">
+      <div className="w-full bg-gradient-to-r from-[#D4A64A] via-amber-400 to-yellow-600 py-2.5 sm:py-3 text-[#0B1220] font-extrabold text-xs sm:text-sm tracking-wide overflow-hidden shadow-xl mb-10 sm:mb-14 rotate-[-0.8deg]">
         <div className="flex whitespace-nowrap animate-marquee gap-8">
           {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
             <span key={idx} className="flex items-center gap-2 font-sora">
@@ -54,23 +54,23 @@ export default function DiningMarquee() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-4">
             <Utensils className="w-4 h-4 text-[#D4A64A]" />
             <span>The Aafa Mess Experience</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-4 font-sora tracking-tight">
+          <h2 className="text-2xl sm:text-5xl font-extrabold text-[#FAF7F0] mb-3 sm:mb-4 font-sora tracking-tight">
             Kerala Hospitality <span className="text-gradient-gold">On Your Plate</span>
           </h2>
-          <p className="text-[#FAF7F0]/80 text-sm sm:text-base leading-relaxed">
+          <p className="text-[#FAF7F0]/80 text-xs sm:text-base leading-relaxed">
             Say goodbye to bland PG food. Our in-house chefs cook fresh, hygienic, home-style Kerala delicacies 3 times a day using zero artificial preservatives.
           </p>
         </div>
 
         {/* Meal Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">
           {[
             { id: 'breakfast', label: '🌅 Breakfast (7:30 - 9:30 AM)' },
             { id: 'lunch', label: '☀️ Lunch (12:30 - 2:30 PM)' },
@@ -80,7 +80,7 @@ export default function DiningMarquee() {
             <button
               key={tab.id}
               onClick={() => setActiveMeal(tab.id)}
-              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+              className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
                 activeMeal === tab.id
                   ? 'bg-gradient-to-r from-[#D4A64A] to-amber-500 text-[#0B1220] shadow-lg shadow-[#D4A64A]/25 scale-105'
                   : 'glass-card text-[#FAF7F0]/70 hover:text-[#FAF7F0]'

@@ -43,12 +43,12 @@ export default function RoomDetailsModal({
 
   return createPortal(
     <div className="fixed inset-0 z-[99999] overflow-y-auto bg-[#0B1220]/90 backdrop-blur-md">
-      {/* Floating High-Contrast Close Button */}
+      {/* Floating High-Contrast Close Button - Desktop */}
       <button
         type="button"
         onClick={onClose}
         aria-label="Close modal"
-        className="fixed top-4 right-4 z-[100000] px-4 py-2 rounded-2xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-[0_10px_25px_rgba(239,68,68,0.5)] border-2 border-white/30 transition-all cursor-pointer"
+        className="hidden sm:flex fixed top-4 right-4 z-[100000] px-4 py-2 rounded-2xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-extrabold text-xs items-center gap-1.5 shadow-[0_10px_25px_rgba(239,68,68,0.5)] border-2 border-white/30 transition-all cursor-pointer"
       >
         <X className="w-4 h-4 stroke-[3]" />
         <span>Close (Esc)</span>
