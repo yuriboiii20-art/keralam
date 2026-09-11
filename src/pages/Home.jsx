@@ -15,6 +15,10 @@ import DiningMarquee from '../components/DiningMarquee';
 import TestimonialsOrbit from '../components/TestimonialsOrbit';
 import FloatingQuickDock from '../components/FloatingQuickDock';
 import HomePgFilterModal from '../components/HomePgFilterModal';
+import FindYourSpacePanel from '../components/BookingFlow/FindYourSpacePanel';
+import MatchingRoomsSection from '../components/BookingFlow/MatchingRoomsSection';
+import StayPlanModal from '../components/BookingFlow/StayPlanModal';
+import RoomDetailsModal from '../components/BookingFlow/RoomDetailsModal';
 import { locations } from '../data/locationsData';
 
 export default function Home({ onOpenBooking }) {
@@ -24,6 +28,41 @@ export default function Home({ onOpenBooking }) {
 
   // Filter Modal State
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  // Dynamic Booking Flow State
+  const [bookingFilters, setBookingFilters] = useState({
+    location: 'Jigani',
+    stayType: 'day',
+    roomType: 'all',
+    sharing: '2',
+    gender: 'all',
+    checkInDate: new Date().toISOString().split('T')[0],
+    duration: '1 Day',
+    durationValue: 1,
+  });
+
+  const [selectedRoomForPlan, setSelectedRoomForPlan] = useState(null);
+  const [selectedRoomForDetails, setSelectedRoomForDetails] = useState(null);
+
+  const handleSearchRooms = (newFilters) => {
+    setBookingFilters((prev) => ({ ...prev, ...newFilters }));
+    setTimeout(() => {
+      const el = document.getElementById('matching-rooms-results');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 60);
+  };
+
+  const handleEditFilters = (overrides) => {
+    if (overrides) {
+      setBookingFilters((prev) => ({ ...prev, ...overrides }));
+    }
+    const el = document.getElementById('find-your-space-panel');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   // Low-Scroll Master Deck Navigation State
   const [activeMasterDeck, setActiveMasterDeck] = useState('living'); // 'living' | 'dining' | 'campus' | 'reviews'
@@ -525,90 +564,77 @@ export default function Home({ onOpenBooking }) {
     <PageTransition>
       <div className="relative z-10 overflow-hidden">
 
-        {/* HERO SECTION */}
-        <section className="relative pt-32 pb-16 px-4 sm:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+        {/* HERO SECTION WITH IMMEDIATE "FIND YOUR SPACE" BOOKING & FILTER INTERFACE */}
+        <section className="relative pt-24 sm:pt-28 pb-8 px-4 sm:px-8 max-w-7xl mx-auto space-y-6">
 
-          {/* Left Text Column */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            className="lg:w-1/2 flex flex-col items-start text-left"
-          >
-
-            {/* Top Pill Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-[#D4A64A] text-xs font-semibold uppercase tracking-wider mb-6">
-              <Sparkles className="w-4 h-4 text-[#D4A64A]" />
-              <span>Jigani • 300m to HCL Gate</span>
-            </div>
-
-            {/* Master Headline */}
-            <h1 className="text-4xl sm:text-6xl font-extrabold text-[#FAF7F0] font-sora tracking-tight leading-[1.15] mb-6">
-              Aafa Coliving  <br />
-              <span className="text-gradient-gold">Your Home Away From Home</span>
-            </h1>
-
-            {/* Subheadline */}
-            <p className="text-[#FAF7F0]/85 text-base sm:text-lg font-medium leading-relaxed mb-8 max-w-xl">
-              Fully furnished 1BHK, 2BHK, Single Rooms & Daily Stays in Jigani, Bengaluru — with authentic homestyle Kerala meals, 1Gbps fiber Wi-Fi & 100% power backup included.
-            </p>
-
-            {/* CTA Buttons with Small Filter Icon Button */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8">
-              <Link
-                to="/rooms"
-                className="px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#D4A64A] via-amber-500 to-yellow-600 text-[#0B1220] font-extrabold text-sm shadow-xl shadow-[#D4A64A]/30 hover:shadow-[#D4A64A]/50 hover:scale-105 transition-all flex items-center gap-2 btn-shimmer"
-                data-cursor="expand"
-              >
-                <span>View All Rooms</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              {/* SMALL FILTER ICON BUTTON */}
-              <button
-                onClick={() => setIsFilterModalOpen(true)}
-                className="px-4 sm:px-5 py-3.5 sm:py-4 rounded-2xl glass-card border border-[#D4A64A]/50 text-[#D4A64A] font-bold text-sm hover:bg-[#D4A64A]/15 hover:scale-105 transition-all flex items-center gap-2 shadow-lg"
-                data-cursor="expand"
-                title="Filter by City, Type, Room Type, and Sharing"
-              >
-                <SlidersHorizontal className="w-4 h-4" />
-                <span>Filter</span>
-              </button>
-
-              <button
-                onClick={() => onOpenBooking('Daily Stay Special (₹499/day)')}
-                className="px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl glass-card border border-white/20 text-[#FAF7F0] font-bold text-sm hover:bg-white/10 hover:scale-105 transition-all flex items-center gap-2"
-                data-cursor="expand"
-              >
-                <Calendar className="w-4 h-4 text-[#D4A64A]" />
-                <span>₹499/day Stay</span>
-              </button>
-            </div>
-
-            {/* Trust Social Proof Badges */}
-            <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-[#FAF7F0]/10 text-xs text-[#FAF7F0]/80">
-              <div className="flex items-center gap-1.5">
-                <Star className="w-4 h-4 fill-[#D4A64A] text-[#D4A64A]" />
-                <span className="font-bold text-[#FAF7F0]">4.9</span>
-                <span>(140+ Google Reviews)</span>
+          {/* Hero Branding Header + 3D Canvas Row */}
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            
+            {/* Left Column: Brand Headline & Value Proposition */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="lg:w-7/12 flex flex-col items-start text-left"
+            >
+              {/* Top Pill Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-[#D4A64A] text-[11px] font-semibold uppercase tracking-wider mb-3">
+                <Sparkles className="w-3 h-3 text-[#D4A64A]" />
+                <span>Jigani • 300m to HCL Gate</span>
               </div>
-              <div className="flex items-center gap-1.5 text-emerald-400 font-semibold">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Verified Google Maps Listing</span>
+
+              {/* Master Headline */}
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#FAF7F0] font-sora tracking-tight leading-[1.15] mb-2">
+                Aafa Coliving <br />
+                <span className="text-gradient-gold">Your Home Away From Home</span>
+              </h1>
+
+              {/* Concise Subheadline */}
+              <p className="text-[#FAF7F0]/85 text-xs sm:text-sm font-medium leading-relaxed mb-3 max-w-xl">
+                Fully furnished 1BHK, 2BHK, Single Rooms & ₹499/day Daily Stays in Jigani, Bengaluru — with authentic homestyle Kerala meals, 1Gbps fiber Wi-Fi & 100% generator power backup included.
+              </p>
+
+              {/* Social Proof & Trust Badges */}
+              <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-[11px] text-[#FAF7F0]/80">
+                <div className="flex items-center gap-1.5">
+                  <Star className="w-3.5 h-3.5 fill-[#D4A64A] text-[#D4A64A]" />
+                  <span className="font-bold text-[#FAF7F0]">4.9</span>
+                  <span>(140+ Google Reviews)</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-emerald-400 font-semibold">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Verified Google Maps Campus</span>
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-          </motion.div>
+            {/* Right Column: 3D Living Canvas Preview (Desktop only) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="lg:w-5/12 w-full hidden md:block max-h-[300px]"
+            >
+              <Hero3DCanvas />
+            </motion.div>
 
-          {/* Right 3D Canvas Showcase Column */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="lg:w-1/2 w-full"
-          >
-            <Hero3DCanvas />
-          </motion.div>
+          </div>
+
+          {/* STEP 1: PROMINENT "FIND YOUR SPACE" BOOKING & FILTER PANEL */}
+          <div id="find-your-space-panel" className="scroll-mt-24">
+            <FindYourSpacePanel
+              initialFilters={bookingFilters}
+              onSearch={handleSearchRooms}
+            />
+          </div>
+
+          {/* STEP 2: SHOW MATCHING ROOMS */}
+          <MatchingRoomsSection
+            filters={bookingFilters}
+            onEditFilters={handleEditFilters}
+            onViewDetails={(room) => setSelectedRoomForDetails(room)}
+            onSelectRoom={(room) => setSelectedRoomForPlan(room)}
+          />
 
         </section>
 
@@ -948,6 +974,31 @@ export default function Home({ onOpenBooking }) {
           isOpen={isFilterModalOpen}
           onClose={() => setIsFilterModalOpen(false)}
           onOpenBooking={onOpenBooking}
+        />
+
+        {/* ROOM DETAILS INSPECTION MODAL */}
+        <RoomDetailsModal
+          isOpen={!!selectedRoomForDetails}
+          onClose={() => setSelectedRoomForDetails(null)}
+          room={selectedRoomForDetails}
+          currentStayType={bookingFilters.stayType}
+          onProceedToBooking={(room) => {
+            setSelectedRoomForDetails(null);
+            setSelectedRoomForPlan(room);
+          }}
+        />
+
+        {/* STEP 3 & 4: STAY PLAN SELECTION & BOOKING CONFIRMATION MODAL */}
+        <StayPlanModal
+          isOpen={!!selectedRoomForPlan}
+          onClose={() => setSelectedRoomForPlan(null)}
+          room={selectedRoomForPlan}
+          initialStayType={bookingFilters.stayType}
+          initialCheckInDate={bookingFilters.checkInDate}
+          initialDurationValue={bookingFilters.durationValue}
+          onBookingConfirmed={(data) => {
+            console.log('Booking confirmed:', data);
+          }}
         />
 
       </div>
